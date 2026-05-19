@@ -157,6 +157,17 @@
     padding: 10px 20px; border-radius: 20px; opacity: 0;
     transition: opacity 0.3s; pointer-events: none; z-index: 300;
   }
+  .login-btn {
+    width: 100%; padding: 11px;
+    border-radius: 10px; border: none;
+    background: linear-gradient(135deg, #E8A0BC, #D4789F);
+    color: #fff; font-family: inherit; font-size: 14px; font-weight: 700;
+    cursor: pointer; margin-top: 4px;
+    transition: opacity 0.2s, transform 0.15s;
+    box-shadow: 0 4px 14px rgba(232,160,188,0.35);
+  }
+  .login-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
   .toast.show { opacity: 1; }
 
   @media (max-width: 640px) {
@@ -169,12 +180,12 @@
 <!-- 로그인 -->
 <div class="login-wrap" id="login-wrap">
   <div class="login-card">
-    <h1>히루기♥ 어드민</h1>
+    <h1>히루기♥</h1>
     <p>Supabase 계정으로 로그인하세요</p>
     <p class="login-err" id="login-err"></p>
     <input type="email" id="email-input" placeholder="이메일" autocomplete="username">
     <input type="password" id="pw-input" placeholder="비밀번호" autocomplete="current-password">
-    <button class="form-add-btn" style="width:100%;" onclick="doLogin()">로그인</button>
+    <button class="login-btn" onclick="doLogin()">로그인</button>
   </div>
 </div>
 
@@ -225,6 +236,7 @@
           <input type="text" id="f-desc" placeholder="예: 공포게임 정주행" onkeydown="if(event.key==='Enter') addSchedule()">
         </div>
       </div>
+      <button class="form-add-btn" onclick="addSchedule()">추가</button>
     </div>
 
     <!-- 테이블 -->
