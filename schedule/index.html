@@ -21,8 +21,9 @@
   nav { position: sticky; top: 0; z-index: 100; padding: 0.75rem 0; background: rgba(232,160,188,0.15); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,160,188,0.25); }
   .nav-inner { max-width: 860px; margin: 0 auto; padding: 0 5vw; display: flex; justify-content: space-between; align-items: center; }
   .nav-logo { font-family: 'Noto Sans KR', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); text-decoration: none; }
-  .nav-back { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.7; text-decoration: none; letter-spacing: 0.03em; transition: opacity 0.2s; }
-  .nav-back:hover { opacity: 1; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 500; color: var(--text); opacity: 0.7; text-decoration: none; letter-spacing: 0.03em; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; }
 
   .container {
     max-width: 860px; margin: 0 auto;
@@ -157,11 +158,13 @@
 <body>
 <div class="page-bg"></div>
 
-<nav>
+<nav id="nav">
   <div class="nav-inner">
-    <a href="../" class="nav-back">← 돌아가기</a>
     <a href="../" class="nav-logo">히루기♥</a>
-    <span style="width:72px;"></span>
+    <ul class="nav-links">
+      <li><a href="../">프로필</a></li>
+      <li><a href="./">방송일정</a></li>
+    </ul>
   </div>
 </nav>
 
