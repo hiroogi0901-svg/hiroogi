@@ -158,8 +158,9 @@
 <div class="login-wrap" id="login-wrap">
   <div class="login-card">
     <h1>히루기♥ 어드민</h1>
-    <p>관리자 비밀번호를 입력해주세요</p>
-    <p class="login-err" id="login-err">비밀번호가 틀렸어요</p>
+    <p>Supabase 계정으로 로그인하세요</p>
+    <p class="login-err" id="login-err"></p>
+    <input type="email" id="email-input" placeholder="이메일" autocomplete="username">
     <input type="password" id="pw-input" placeholder="비밀번호" autocomplete="current-password">
     <button class="form-add-btn" style="width:100%;" onclick="doLogin()">로그인</button>
   </div>
@@ -255,43 +256,72 @@
 <script>
   const SUPABASE_URL  = 'https://xjgzdngivwjemcuzwsiw.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqZ3pkbmdpdndqZW1jdXp3c2l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzI2NDcsImV4cCI6MjA5NDc0ODY0N30.dm1CYfoh_kVm-XDzbclOzt7qQezrk7ocSbNBMYF_v3M';
-  const ADMIN_PW = 'hiroogi2026';
 
-  const headers = {
-    apikey: SUPABASE_ANON,
-    Authorization: `Bearer ${SUPABASE_ANON}`,
-    'Content-Type': 'application/json',
-    Prefer: 'return=representation'
-  };
+  let accessToken = null;
+
+  function authHeaders() {
+    return {
+      apikey: SUPABASE_ANON,
+      Authorization: `Bearer ${accessToken || SUPABASE_ANON}`,
+      'Content-Type': 'application/json',
+      Prefer: 'return=representation'
+    };
+  }
 
   // ── 로그인 ──
-  function doLogin() {
-    const pw = document.getElementById('pw-input').value;
-    if (pw === ADMIN_PW) {
-      sessionStorage.setItem('hiroogi_admin', '1');
-      document.getElementById('login-wrap').style.display = 'none';
-      document.getElementById('admin-wrap').style.display = 'block';
-      loadSchedule();
+  async function doLogin() {
+    const email = document.getElementById('email-input').value.trim();
+    const pw    = document.getElementById('pw-input').value;
+    const err   = document.getElementById('login-err');
+    err.style.display = 'none';
+
+    const res  = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_ANON, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pw })
+    });
+    const data = await res.json();
+
+    if (data.access_token) {
+      accessToken = data.access_token;
+      sessionStorage.setItem('hiroogi_token', accessToken);
+      showAdmin();
     } else {
-      document.getElementById('login-err').style.display = 'block';
+      err.textContent = data.error_description || '로그인 실패';
+      err.style.display = 'block';
     }
   }
-  function doLogout() {
-    sessionStorage.removeItem('hiroogi_admin');
+
+  async function doLogout() {
+    await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+      method: 'POST',
+      headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${accessToken}` }
+    });
+    accessToken = null;
+    sessionStorage.removeItem('hiroogi_token');
     location.reload();
   }
-  document.getElementById('pw-input').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 
-  if (sessionStorage.getItem('hiroogi_admin') === '1') {
+  function showAdmin() {
     document.getElementById('login-wrap').style.display = 'none';
     document.getElementById('admin-wrap').style.display = 'block';
     loadSchedule();
   }
 
+  document.getElementById('pw-input').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+  // 세션 복원
+  const saved = sessionStorage.getItem('hiroogi_token');
+  if (saved) {
+    accessToken = saved;
+    showAdmin();
+  }
+
   // ── CRUD ──
   async function loadSchedule() {
-    const res  = await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule?select=*&order=scheduled_date.desc`, { headers });
+    const res  = await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule?select=*&order=scheduled_date.desc`, { headers: authHeaders() });
     const data = await res.json();
+    if (!Array.isArray(data)) { doLogout(); return; }
     renderTable(data);
   }
 
@@ -342,7 +372,7 @@
 
   async function deleteRow(id) {
     if (!confirm('삭제할까요?')) return;
-    await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule?id=eq.${id}`, { method: 'DELETE', headers });
+    await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule?id=eq.${id}`, { method: 'DELETE', headers: authHeaders() });
     showToast('삭제했어요');
     loadSchedule();
   }
