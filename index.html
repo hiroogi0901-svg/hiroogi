@@ -185,6 +185,31 @@
   .btn-outline { border: 1px solid rgba(232,160,188,0.35); color: var(--pink); }
   .btn-outline:hover { background: rgba(232,160,188,0.08); transform: translateY(-2px); }
 
+  .schedule-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.85rem 1.4rem;
+    background: rgba(232,160,188,0.1);
+    border: 1px solid rgba(232,160,188,0.45);
+    border-radius: 14px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .schedule-btn:hover {
+    background: rgba(232,160,188,0.22);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232,160,188,0.22);
+  }
+  .schedule-btn-label {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.82rem; font-weight: 600;
+    color: #c0607e;
+  }
+  .schedule-btn-arrow {
+    font-size: 1rem; color: var(--pink);
+    transition: transform 0.2s;
+  }
+  .schedule-btn:hover .schedule-btn-arrow { transform: translateX(4px); }
+
   @keyframes riseIn { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
 
   /* FOOTER */
@@ -274,6 +299,11 @@
       <span class="tag">K-POP</span>
       <span class="tag">고양이 좋아</span>
     </div>
+
+    <a href="schedule/" class="schedule-btn" style="animation: riseIn 0.8s 0.8s both;">
+      <span class="schedule-btn-label">방송일정 보기</span>
+      <span class="schedule-btn-arrow">→</span>
+    </a>
 
     <nav class="links">
       <a class="btn btn-fill" href="https://www.sooplive.com/station/hiroogi0901" target="_blank">📺 방송 보러가기</a>
