@@ -361,7 +361,7 @@
     const title  = document.getElementById('f-title').value.trim();
     if (!date || !time) { showToast('날짜와 시간을 입력해주세요'); return; }
     await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule`, {
-      method: 'POST', headers,
+      method: 'POST', headers: authHeaders(),
       body: JSON.stringify({ scheduled_date: date, start_time: time+':00', is_active: active, title: title || null })
     });
     showToast('추가했어요 ✓');
@@ -394,7 +394,7 @@
     const active = document.getElementById('e-active').value === 'true';
     const title  = document.getElementById('e-title').value.trim();
     await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule?id=eq.${id}`, {
-      method: 'PATCH', headers,
+      method: 'PATCH', headers: authHeaders(),
       body: JSON.stringify({ scheduled_date: date, start_time: time+':00', is_active: active, title: title || null })
     });
     closeModal();
