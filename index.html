@@ -6,144 +6,217 @@
 <title>히루기♥ — SOOP VTuber</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --bg: #FFFAF7; --pink: #E8A0BC; --text: #2D1A24; --beige: #F5ECD7; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-  .page-bg {
-    position: fixed; inset: 0; z-index: -1;
-    background: radial-gradient(ellipse at 70% 20%, rgba(232,160,188,0.13) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(245,236,215,0.5) 0%, transparent 50%);
+  :root {
+    --bg:    #fffaf7;
+    --pink:  #e8a0bc;
+    --rose:  #d4789f;
+    --peach: #f5e6d7;
+    --text:  #2d1a24;
+    --muted: #a07888;
+    --white: #ffffff;
   }
+
+  html, body { height: 100%; background: var(--bg); overflow: hidden; }
+
+  /* 배경 */
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 30% 50%, rgba(245,230,215,0.5) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 70% at 80% 30%, rgba(232,160,188,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 60% 85%, rgba(212,120,159,0.08) 0%, transparent 55%),
+      var(--bg);
+  }
+  .circles { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .circle { position: absolute; border-radius: 50%; background: rgba(232,160,188,0.07); animation: drift ease-in-out infinite alternate; }
+  .c1 { width:320px; height:320px; top:-80px; right:-60px; animation-duration:8s; }
+  .c2 { width:180px; height:180px; bottom:10%; left:5%; animation-duration:6s; animation-delay:1s; background:rgba(232,160,188,0.12); }
+  .c3 { width:80px; height:80px; top:40%; left:15%; animation-duration:5s; animation-delay:2s; background:rgba(245,230,215,0.3); }
+  @keyframes drift { from { transform: translateY(0) scale(1); } to { transform: translateY(-24px) scale(1.04); } }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 1.1rem 0;
-    background: rgba(232,160,188,0.18); backdrop-filter: blur(16px);
+    padding: 1rem 0;
+    background: rgba(232,160,188,0.15); backdrop-filter: blur(16px);
     border-bottom: 1px solid transparent; transition: border-color 0.3s;
   }
   nav.scrolled { border-bottom-color: rgba(232,160,188,0.3); }
-  .nav-inner { max-width: 960px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--text); text-decoration: none; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 5vw; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: 'Bodoni Moda', serif; font-size: 1.1rem; font-style: italic; color: var(--text); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 13px; color: rgba(45,26,36,0.6); text-decoration: none; transition: color 0.2s; }
+  .nav-links a { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
 
-  /* LAYOUT */
-  .profile-section { max-width: 960px; margin: 0 auto; padding: 120px 6vw 5rem; }
-
-  .profile-top {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 3rem;
-    align-items: center;
-    margin-bottom: 2.5rem;
+  /* SCENE */
+  .scene {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr;
+    height: 100vh; padding-top: 56px;
   }
 
-  .avatar-circle {
-    width: 280px; height: 280px; border-radius: 50%;
-    border: 3px solid rgba(232,160,188,0.55);
-    overflow: hidden;
-    box-shadow: 0 6px 32px rgba(232,160,188,0.25);
-    background: rgba(232,160,188,0.06);
-    flex-shrink: 0;
+  /* LEFT — 이미지 */
+  .visual {
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; padding: 3rem;
   }
-  .avatar-circle img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center center;
+  .visual::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--bg) 100%);
+    z-index: 1;
+  }
+  .photo-frame {
+    position: relative; z-index: 2;
+    width: min(300px, 70%);
+    animation: floatIn 1.2s cubic-bezier(0.16,1,0.3,1) both;
+  }
+  .photo-frame::before {
+    content: '';
+    position: absolute; inset: -12px -12px 12px 12px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--peach), var(--pink));
+    opacity: 0.3; z-index: -1;
+  }
+  .photo-frame img, .photo-placeholder {
+    width: 100%; aspect-ratio: 3/4;
+    border-radius: 16px;
+    object-fit: cover; object-position: center;
+    background: linear-gradient(160deg, #fce7f3, #f5e6d7);
     display: block;
   }
-
-  .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-  .profile-label { font-size: 11px; letter-spacing: 0.18em; color: rgba(45,26,36,0.4); text-transform: uppercase; margin-bottom: 0.3rem; }
-  .profile-name { font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.05; margin-bottom: 0.5rem; }
-  .profile-bio { font-size: 13px; color: rgba(45,26,36,0.62); line-height: 1.75; margin-bottom: 0.9rem; }
-
-  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
-  .badge { padding: 3px 12px; border-radius: 40px; font-size: 12px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); color: rgba(45,26,36,0.7); }
-
-  .hero-card {
-    background: #fff;
-    border: 0.5px solid rgba(232,160,188,0.3);
-    border-radius: 20px;
-    padding: 2rem 2rem 1.75rem;
+  .stamp {
+    position: absolute; bottom: -10px; right: -10px; z-index: 3;
+    width: 62px; height: 62px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--pink), var(--rose));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(232,160,188,0.4);
+    animation: spinStamp 20s linear infinite;
   }
-  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; border-radius: 40px; font-family: inherit; font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
-  .btn:hover { opacity: 0.82; transform: translateY(-1px); }
-  .btn-primary { background: rgba(232,160,188,0.25); border: 1px solid rgba(232,160,188,0.5); color: var(--text); }
-  .btn-outline { background: transparent; border: 1px solid rgba(45,26,36,0.18); color: rgba(45,26,36,0.7); }
+  .stamp svg { width: 100%; height: 100%; }
+  .stamp-inner { position: absolute; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+  @keyframes spinStamp { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes floatIn { from { opacity:0; transform: translateX(-30px) rotate(-3deg); } to { opacity:1; transform: translateX(0) rotate(0deg); } }
 
-  /* 카드 그리드 */
-  .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
-  .info-grid-wide { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  /* RIGHT — 정보 */
+  .info {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 2rem 5vw 2rem 2rem; gap: 1.4rem;
+  }
+  .eyebrow {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.62rem; font-weight: 500;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--pink);
+    animation: riseIn 0.8s 0.3s both;
+  }
+  .name-block { animation: riseIn 0.8s 0.45s both; }
+  .name-main {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    font-weight: 700; line-height: 1; letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .name-main em { font-style: italic; color: var(--pink); }
+  .name-sub {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.7rem; font-weight: 300;
+    letter-spacing: 0.18em; color: var(--muted);
+    margin-top: 0.4rem;
+  }
+  .rule { display: flex; align-items: center; gap: 0.8rem; animation: riseIn 0.8s 0.55s both; }
+  .rule-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pink); flex-shrink: 0; }
+  .rule-line { height: 1px; flex: 1; background: linear-gradient(to right, var(--pink), transparent); }
 
+  .bio {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.875rem; font-weight: 300; line-height: 1.9;
+    color: var(--muted);
+    animation: riseIn 0.8s 0.65s both;
+  }
+
+  /* 정보 카드 그리드 */
+  .info-cards {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+    animation: riseIn 0.8s 0.7s both;
+  }
   .info-card {
-    background: #fff;
+    background: rgba(255,255,255,0.7);
     border: 0.5px solid rgba(232,160,188,0.3);
-    border-radius: 16px;
-    padding: 1.6rem 1rem;
+    border-radius: 12px; padding: 0.75rem 0.7rem;
     text-align: center;
-    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
-  .info-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 22px rgba(232,160,188,0.22);
-    border-color: var(--pink);
-  }
-  .info-card-label {
-    font-size: 11px; font-weight: 500;
-    color: rgba(45,26,36,0.42);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    margin-bottom: 6px;
-  }
-  .info-card-val { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+  .info-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(232,160,188,0.18); }
+  .info-card-label { font-family: 'Noto Sans KR', sans-serif; font-size: 10px; color: rgba(45,26,36,0.4); font-weight: 500; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .info-card-val { font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); }
 
-  .tag-card {
-    background: #fff;
-    border: 0.5px solid rgba(232,160,188,0.3);
-    border-radius: 16px;
-    padding: 1.3rem 1.2rem;
-    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; animation: riseIn 0.8s 0.75s both; }
+  .tag {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.68rem; font-weight: 400;
+    padding: 0.28rem 0.8rem; border-radius: 999px;
+    border: 1.5px solid rgba(232,160,188,0.3);
+    color: var(--pink); background: rgba(232,160,188,0.06);
+    transition: all 0.2s; cursor: default;
   }
-  .tag-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 22px rgba(232,160,188,0.22);
-    border-color: var(--pink);
+  .tag:hover { background: rgba(232,160,188,0.14); transform: translateY(-1px); }
+
+  .links { display: flex; gap: 0.6rem; flex-wrap: wrap; animation: riseIn 0.8s 0.85s both; }
+  .btn {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.75rem; font-weight: 500;
+    text-decoration: none; padding: 0.55rem 1.2rem;
+    border-radius: 999px; transition: all 0.25s;
   }
-  .tag-card-label {
-    font-size: 11px; font-weight: 500;
-    color: rgba(45,26,36,0.42);
-    text-transform: uppercase; letter-spacing: 0.08em;
-    margin-bottom: 10px;
+  .btn-fill {
+    background: linear-gradient(135deg, var(--pink), var(--rose));
+    color: white; box-shadow: 0 4px 14px rgba(232,160,188,0.3);
   }
-  .tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
-  .tag { padding: 4px 11px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); border-radius: 20px; font-size: 12px; color: rgba(45,26,36,0.7); }
+  .btn-fill:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,160,188,0.42); }
+  .btn-outline { border: 1.5px solid rgba(232,160,188,0.35); color: var(--pink); }
+  .btn-outline:hover { background: rgba(232,160,188,0.08); transform: translateY(-2px); }
+
+  @keyframes riseIn { from { opacity:0; transform: translateY(14px); } to { opacity:1; transform: translateY(0); } }
 
   /* FOOTER */
-  footer { background: var(--beige); border-top: 1px solid rgba(45,26,36,0.08); padding: 1.75rem 0; margin-top: 1rem; }
-  .footer-inner { max-width: 960px; margin: 0 auto; padding: 0 6vw; font-size: 12px; color: rgba(45,26,36,0.4); }
+  footer {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    padding: 0.75rem 0;
+    background: rgba(245,236,215,0.85); backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(45,26,36,0.07);
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; padding: 0 5vw; display: flex; justify-content: space-between; align-items: center; font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: rgba(45,26,36,0.4); }
+  footer a { color: var(--pink); text-decoration: none; }
 
-  /* MOBILE */
-  @media (max-width: 680px) {
-    .profile-top { grid-template-columns: 1fr; gap: 1.5rem; }
-    .avatar-circle { width: 140px; height: 140px; }
-    .info-grid { grid-template-columns: repeat(2, 1fr); }
-    .info-grid-wide { grid-template-columns: 1fr; }
+  /* 모바일 */
+  @media (max-width: 768px) {
+    html, body { overflow: auto; }
+    .scene { grid-template-columns: 1fr; height: auto; padding-top: 56px; }
+    .visual { min-height: 60vw; padding: 2rem; }
+    .visual::after { background: linear-gradient(to top, var(--bg) 0%, transparent 40%); }
+    .info { padding: 1.5rem 1.8rem 5rem; }
+    .name-main { font-size: clamp(2.2rem, 9vw, 3.2rem); }
+    .info-cards { grid-template-columns: repeat(2, 1fr); }
+    footer { position: sticky; }
     .nav-links { display: none; }
-    .profile-section { padding: 90px 5vw 3rem; }
     .nav-inner { padding: 0 5vw; }
-    .footer-inner { padding: 0 5vw; }
   }
 </style>
 </head>
 <body>
+<div class="bg"></div>
+<div class="circles">
+  <div class="circle c1"></div>
+  <div class="circle c2"></div>
+  <div class="circle c3"></div>
+</div>
 
-<div class="page-bg"></div>
-
+<!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
     <a href="#" class="nav-logo">히루기♥</a>
@@ -154,65 +227,66 @@
   </div>
 </nav>
 
-<section class="profile-section" id="profile">
-  <div class="profile-top">
-    <div class="avatar-circle">
-      <img src="assets/profile.jpg" alt="히루기" onerror="this.style.display='none'">
-    </div>
-    <div class="profile-title">
-      <div class="hero-card">
-        <p class="profile-label">SOOP VTuber · 개인</p>
-        <h1 class="profile-name">히루기♥</h1>
-        <p class="profile-bio">게임하고 떠들고 웃는 게 좋은 버튜버.<br>소통과 게임, 가끔 노래까지. 팬 이름은 <strong>루냥이</strong> 🐱</p>
-        <div class="badge-row">
-          <span class="badge">소통</span>
-          <span class="badge">게임</span>
-          <span class="badge">공포게임</span>
-          <span class="badge">가끔 노래</span>
-        </div>
-        <div class="btn-group">
-          <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank" class="btn btn-primary">📺 방송 보러가기</a>
-          <a href="https://www.youtube.com/@히루기" target="_blank" class="btn btn-outline">▶ 유튜브</a>
-        </div>
+<!-- MAIN -->
+<main class="scene">
+  <div class="visual">
+    <div class="photo-frame">
+      <img src="assets/profile.jpg" alt="히루기" onerror="this.outerHTML='<div class=photo-placeholder></div>'">
+      <div class="stamp">
+        <svg viewBox="0 0 68 68"><circle cx="34" cy="34" r="33" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="3 4"/></svg>
+        <span class="stamp-inner">🎀</span>
       </div>
     </div>
   </div>
 
-  <div class="info-grid">
-    <div class="info-card"><span class="info-card-label">플랫폼</span><span class="info-card-val">SOOP</span></div>
-    <div class="info-card"><span class="info-card-label">데뷔</span><span class="info-card-val">2026.03.11</span></div>
-    <div class="info-card"><span class="info-card-label">생일</span><span class="info-card-val">8월 23일 🎂</span></div>
-    <div class="info-card"><span class="info-card-label">팬 이름</span><span class="info-card-val">루냥이 🐱</span></div>
-  </div>
-
-  <div class="info-grid-wide">
-    <div class="tag-card">
-      <p class="tag-card-label">좋아하는 것</p>
-      <div class="tag-cloud">
-        <span class="tag">🐱 고양이</span><span class="tag">✨ 예쁜 것</span>
-        <span class="tag">🎮 게임</span><span class="tag">😱 공포 게임</span>
-        <span class="tag">🎵 K-POP</span><span class="tag">🎼 발라드</span>
-      </div>
+  <div class="info">
+    <p class="eyebrow">SOOP · 버추얼 스트리머 · 개인</p>
+    <div class="name-block">
+      <h1 class="name-main"><em>히</em>루기♥</h1>
+      <p class="name-sub">히루기 · 루냥이의 버튜버</p>
     </div>
-    <div class="tag-card">
-      <p class="tag-card-label">방송 컨텐츠</p>
-      <div class="tag-cloud">
-        <span class="tag">💬 소통</span><span class="tag">🎮 게임</span>
-        <span class="tag">😱 공포 게임</span><span class="tag">🎤 가끔 노래</span>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="rule"><span class="rule-dot"></span><span class="rule-line"></span></div>
+    <p class="bio">
+      게임하고 떠들고 웃는 게 좋은 버튜버.<br>
+      소통과 게임, 가끔 노래까지.<br>
+      팬 이름은 <strong>루냥이</strong> 🐱
+    </p>
 
+    <div class="info-cards">
+      <div class="info-card"><div class="info-card-label">플랫폼</div><div class="info-card-val">SOOP</div></div>
+      <div class="info-card"><div class="info-card-label">데뷔</div><div class="info-card-val">26.03.11</div></div>
+      <div class="info-card"><div class="info-card-label">생일</div><div class="info-card-val">8월 23일 🎂</div></div>
+      <div class="info-card"><div class="info-card-label">팬 이름</div><div class="info-card-val">루냥이 🐱</div></div>
+    </div>
+
+    <div class="tags">
+      <span class="tag">소통</span>
+      <span class="tag">게임</span>
+      <span class="tag">공포게임</span>
+      <span class="tag">가끔 노래</span>
+      <span class="tag">K-POP</span>
+      <span class="tag">고양이 좋아</span>
+    </div>
+
+    <nav class="links">
+      <a class="btn btn-fill" href="https://www.sooplive.com/station/hiroogi0901" target="_blank">📺 방송 보러가기</a>
+      <a class="btn btn-outline" href="schedule/">방송일정</a>
+      <a class="btn btn-outline" href="https://www.youtube.com/@히루기" target="_blank">▶ 유튜브</a>
+    </nav>
+  </div>
+</main>
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <span>© 2026 히루기♥ · 루냥이의 방</span>
+    <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank">SOOP →</a>
   </div>
 </footer>
 
 <script>
   window.addEventListener('scroll', () => {
-    document.getElementById('nav').classList.toggle('scrolled', scrollY > 60);
+    document.getElementById('nav').classList.toggle('scrolled', scrollY > 10);
   });
 </script>
 </body>

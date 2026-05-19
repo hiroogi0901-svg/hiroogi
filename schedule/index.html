@@ -4,22 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>방송일정 — 히루기♥</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --bg: #FFFAF7; --pink: #E8A0BC; --text: #2D1A24; --beige: #F5ECD7; }
   body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
   .page-bg {
     position: fixed; inset: 0; z-index: -1;
-    background: radial-gradient(ellipse at 70% 20%, rgba(232,160,188,0.13) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, rgba(245,236,215,0.5) 0%, transparent 50%);
+    background:
+      radial-gradient(ellipse 70% 60% at 30% 50%, rgba(245,230,215,0.45) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 70% at 80% 30%, rgba(232,160,188,0.13) 0%, transparent 60%),
+      var(--bg);
   }
 
   /* NAV */
-  nav { position: sticky; top: 0; z-index: 100; padding: 1rem 0; background: rgba(232,160,188,0.18); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,160,188,0.3); }
+  nav { position: sticky; top: 0; z-index: 100; padding: 1rem 0; background: rgba(232,160,188,0.15); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,160,188,0.25); }
   .nav-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--text); text-decoration: none; }
-  .nav-back { font-size: 13px; color: rgba(45,26,36,0.6); text-decoration: none; }
+  .nav-logo { font-family: 'Bodoni Moda', serif; font-size: 1.1rem; font-style: italic; color: var(--text); text-decoration: none; }
+  .nav-back { font-family: 'Noto Sans KR', sans-serif; font-size: 12px; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
   .nav-back:hover { color: var(--text); }
 
   .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 6vw 4rem; }
@@ -85,14 +87,10 @@
   .modal-close:hover { color: var(--text); }
 
   /* 모바일 주간 탭 */
-  .week-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
-  .week-tab {
-    flex: 1; padding: 9px; border-radius: 10px; font-family: inherit;
-    font-size: 13px; font-weight: 600; cursor: pointer; text-align: center;
-    background: rgba(45,26,36,0.05); border: 1px solid rgba(45,26,36,0.1);
-    color: rgba(45,26,36,0.55); transition: all 0.15s;
-  }
-  .week-tab.active { background: rgba(232,160,188,0.2); border-color: var(--pink); color: var(--text); }
+  .week-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .week-nav-btn { background: rgba(232,160,188,0.15); border: 1px solid rgba(232,160,188,0.35); border-radius: 8px; width: 32px; height: 32px; font-size: 16px; color: var(--text); cursor: pointer; transition: background 0.15s; display: flex; align-items: center; justify-content: center; }
+  .week-nav-btn:hover { background: rgba(232,160,188,0.3); }
+  .week-nav-label { font-size: 13px; font-weight: 700; color: var(--text); }
 
   /* 모바일 리스트 */
   .mobile-list { display: flex; flex-direction: column; gap: 8px; }
@@ -114,8 +112,8 @@
   .stream-type-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; color: #fff; font-weight: 600; flex-shrink: 0; }
 
   /* FOOTER */
-  footer { background: var(--beige); border-top: 1px solid rgba(45,26,36,0.08); padding: 1.5rem 0; margin-top: 2rem; }
-  .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(45,26,36,0.4); }
+  footer { background: rgba(245,236,215,0.85); backdrop-filter: blur(12px); border-top: 1px solid rgba(45,26,36,0.07); padding: 0.75rem 0; margin-top: 2rem; }
+  .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; font-family: 'Noto Sans KR', sans-serif; font-size: 11px; color: rgba(45,26,36,0.4); }
   footer a { color: var(--pink); text-decoration: none; }
 
   /* 반응형 */
@@ -165,9 +163,10 @@
 
   <!-- 모바일 주간 탭 + 리스트 -->
   <div class="mobile-section">
-    <div class="week-tabs">
-      <button class="week-tab active" id="tab-this" onclick="switchWeek(0)">이번 주</button>
-      <button class="week-tab" id="tab-next" onclick="switchWeek(1)">다음 주</button>
+    <div class="week-nav">
+      <button class="week-nav-btn" onclick="shiftWeek(-1)">‹</button>
+      <span class="week-nav-label" id="week-label"></span>
+      <button class="week-nav-btn" onclick="shiftWeek(1)">›</button>
     </div>
     <div class="mobile-list" id="mobile-list"></div>
   </div>
@@ -199,14 +198,14 @@
   const SUPABASE_URL  = 'https://xjgzdngivwjemcuzwsiw.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqZ3pkbmdpdndqZW1jdXp3c2l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzI2NDcsImV4cCI6MjA5NDc0ODY0N30.dm1CYfoh_kVm-XDzbclOzt7qQezrk7ocSbNBMYF_v3M';
 
-  const TYPE_COLORS = { broadcast:'#E8A0BC', game:'#93C5FD', song:'#86EFAC', collab:'#FCA5A5', event:'#FCD34D', rest:'#C0B6D6', other:'#D1D5DB' };
+  const TYPE_COLORS = { broadcast:'#E8A0BC', game:'#93C5FD', song:'#6EBF9E', collab:'#FCA5A5', event:'#FCD34D', rest:'#C0B6D6', other:'#D1D5DB' };
   const TYPE_LABELS = { broadcast:'방송', game:'게임', song:'노래', collab:'합방', event:'이벤트', rest:'휴방', other:'기타' };
   const DAY_KR = ['일','월','화','수','목','금','토'];
 
   const now = new Date();
   let calYear = now.getFullYear(), calMonth = now.getMonth();
   let scheduleMap = {}, allSchedules = [];
-  let activeWeek = 0; // 0=이번주, 1=다음주
+  let weekOffset = 0;
 
   function getColor(row) { return !row.is_active ? TYPE_COLORS.rest : (row.color || TYPE_COLORS[row.content_type] || TYPE_COLORS.broadcast); }
   function getLabel(row) { return !row.is_active ? TYPE_LABELS.rest : (TYPE_LABELS[row.content_type] || TYPE_LABELS.broadcast); }
@@ -269,14 +268,29 @@
     grid.innerHTML = html;
   }
 
-  // 모바일 주간 렌더
+
+  function shiftWeek(dir) {
+    weekOffset += dir;
+    renderMobileWeek();
+  }
+
   function renderMobileWeek() {
-    const list  = document.getElementById('mobile-list');
-    // 이번주 월요일 기준 주 시작 (일요일 기준으로 해도 됨)
-    const todayDow    = now.getDay(); // 0=일
-    const weekStart   = new Date(now);
-    weekStart.setDate(now.getDate() - todayDow + (activeWeek * 7)); // 이번주 일요일
-    
+    const list = document.getElementById('mobile-list');
+    const label = document.getElementById('week-label');
+
+    // 이번주 일요일 기준
+    const todayDow  = now.getDay();
+    const weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - todayDow + (weekOffset * 7));
+    const weekEnd = new Date(weekStart);
+    weekEnd.setDate(weekStart.getDate() + 6);
+
+    const fmtMD = d => `${d.getMonth()+1}/${d.getDate()}`;
+    if (weekOffset === 0) label.textContent = '이번 주';
+    else if (weekOffset === 1) label.textContent = '다음 주';
+    else if (weekOffset === -1) label.textContent = '저번 주';
+    else label.textContent = `${fmtMD(weekStart)} — ${fmtMD(weekEnd)}`;
+
     const items = [];
     for (let i = 0; i < 7; i++) {
       const d   = new Date(weekStart); d.setDate(weekStart.getDate() + i);
@@ -310,13 +324,6 @@
       }
     }
     list.innerHTML = items.join('');
-  }
-
-  function switchWeek(w) {
-    activeWeek = w;
-    document.getElementById('tab-this').classList.toggle('active', w === 0);
-    document.getElementById('tab-next').classList.toggle('active', w === 1);
-    renderMobileWeek();
   }
 
   function showModal(id) {
