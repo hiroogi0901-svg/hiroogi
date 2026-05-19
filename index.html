@@ -238,12 +238,12 @@
     .photo-frame img, .photo-placeholder { aspect-ratio: 23/10; border-radius: 0; object-position: top center; }
     .photo-frame::before { display: none; }
     .stamp { display: none; }
-    .info { padding: 1rem 1.25rem 1.25rem; gap: 0.7rem; }
+    .info { padding: 1rem 1.25rem 2rem; gap: 0.7rem; }
     .name-main { font-size: clamp(1.8rem, 8vw, 2.4rem); }
     .nav-links { display: flex; }
     .nav-links a { font-size: 11px; }
     .nav-inner, .footer-inner { padding: 0 1.25rem; }
-    footer { position: static; margin-top: 1rem; }
+    footer { position: static; margin-top: 0; z-index: auto; backdrop-filter: none; background: var(--beige); }
   }
 </style>
 </head>
