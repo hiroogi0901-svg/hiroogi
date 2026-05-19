@@ -231,7 +231,7 @@
 
   @media (max-width: 640px) {
     html, body { overflow: auto; }
-    .scene { grid-template-columns: 1fr; min-height: auto; margin-top: 44px; padding-bottom: 56px; }
+    .scene { grid-template-columns: 1fr; min-height: auto; margin-top: 44px; padding-bottom: 0; }
     .visual { padding: 0; justify-content: center; overflow: hidden; height: 56vw; }
     .visual::after { background: linear-gradient(to bottom, transparent 50%, var(--bg) 100%); }
     .photo-frame { width: 100%; border-radius: 0; }
@@ -243,7 +243,7 @@
     .nav-links { display: flex; }
     .nav-links a { font-size: 11px; }
     .nav-inner, .footer-inner { padding: 0 1.25rem; }
-    footer { position: sticky; }
+    footer { position: static; margin-top: 1rem; }
   }
 </style>
 </head>
