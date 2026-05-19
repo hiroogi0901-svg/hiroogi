@@ -277,14 +277,21 @@
     50% { opacity: 0.4; }
   }
 
-  /* ── ABOUT ── */
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .about-card {
-    background: #fff;
-    border: 1px solid rgba(45,26,36,0.1);
-    border-radius: 20px;
-    padding: 1.75rem;
+  .hero-profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(232,160,188,0.3);
   }
+  .hero-info-block .info-row {
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(45,26,36,0.07);
+    font-size: 13px;
+  }
+  .hero-info-block .info-row:last-child { border-bottom: none; }
+  .hero-tag-block .tag-cloud { margin-top: 0; }
   .about-card-title {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 1rem;
@@ -433,30 +440,27 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">히루<span>기</span>♥</a>
+  <a href="#" class="nav-logo">히루기♥</a>
   <ul class="nav-links">
-    <li><a href="#schedule">방송일정</a></li>
-    <li><a href="#about">프로필</a></li>
-    <li><a href="#links">링크</a></li>
+    <li><a href="#profile">프로필</a></li>
+    <li><a href="schedule/">방송일정</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<!-- HERO + PROFILE 병합 -->
+<section class="hero" id="profile">
   <div class="hero-bg-shape"></div>
   <div class="hero-bg-shape2"></div>
 
   <div class="hero-visual">
     <div class="avatar-wrap">
-      <!-- 이미지 준비되면 src 교체: assets/images/hirougi.png -->
       <img class="avatar-img" src="" alt="히루기" onerror="this.style.display='none'">
     </div>
   </div>
 
   <div class="hero-info">
     <p class="label-sm">SOOP VTuber · 개인</p>
-    <h1 class="hero-name">히루<span>기</span>♥</h1>
-    <p class="hero-catch">"개웃기네 ㅋㅋ"</p>
+    <h1 class="hero-name">히루기♥</h1>
     <p class="hero-bio">게임하고 떠들고 웃는 게 좋은 버튜버.<br>소통과 게임, 가끔 노래까지.<br>팬 이름은 <strong>루냥이</strong> 🐱</p>
     <div class="badge-row">
       <span class="badge accent">SOOP 생방송</span>
@@ -465,7 +469,29 @@
       <span class="badge">공포게임</span>
       <span class="badge">가끔 노래</span>
     </div>
-    <div class="cta-group">
+
+    <!-- 프로필 정보 인라인 병합 -->
+    <div class="hero-profile-grid">
+      <div class="hero-info-block">
+        <div class="info-row"><span class="info-key">플랫폼</span><span class="info-val">SOOP</span></div>
+        <div class="info-row"><span class="info-key">데뷔</span><span class="info-val">2026. 03. 11</span></div>
+        <div class="info-row"><span class="info-key">생일</span><span class="info-val">8월 23일 🎂</span></div>
+        <div class="info-row"><span class="info-key">팬 이름</span><span class="info-val">루냥이 🐱</span></div>
+      </div>
+      <div class="hero-tag-block">
+        <p class="info-key" style="margin-bottom:8px;">좋아하는 것</p>
+        <div class="tag-cloud">
+          <span class="tag">🐱 고양이</span>
+          <span class="tag">✨ 예쁜 것</span>
+          <span class="tag">🎮 게임</span>
+          <span class="tag">😱 공포 게임</span>
+          <span class="tag">🎵 K-POP</span>
+          <span class="tag">🎼 발라드</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-group" style="margin-top:1.5rem;">
       <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank" class="btn btn-primary">
         📺 방송 보러가기
       </a>
@@ -476,120 +502,6 @@
   </div>
 </section>
 
-<!-- SCHEDULE -->
-<section class="section section-alt reveal" id="schedule">
-  <div class="section-header">
-    <div style="display:flex; align-items:center; gap:1rem; flex:1;">
-      <h2 class="section-title">방송 일정</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="cal-nav">
-      <button class="cal-btn" id="cal-prev">‹</button>
-      <span class="cal-month" id="cal-month"></span>
-      <button class="cal-btn" id="cal-next">›</button>
-    </div>
-  </div>
-
-  <div class="cal-weekdays">
-    <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
-  </div>
-  <div class="cal-grid" id="cal-grid">
-    <!-- JS 렌더 -->
-  </div>
-  <p class="schedule-note" id="schedule-note">일정을 불러오는 중...</p>
-</section>
-
-<!-- ABOUT -->
-<section class="section reveal" id="about">
-  <div class="section-header">
-    <h2 class="section-title">프로필</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="about-grid">
-    <div class="about-card">
-      <h3 class="about-card-title">기본 정보</h3>
-      <div class="info-row">
-        <span class="info-key">이름</span>
-        <span class="info-val">히루기♥</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">플랫폼</span>
-        <span class="info-val">SOOP</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">데뷔</span>
-        <span class="info-val">2026. 03. 11</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">생일</span>
-        <span class="info-val">8월 23일 🎂</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">팬 이름</span>
-        <span class="info-val">루냥이 🐱</span>
-      </div>
-      <div class="info-row">
-        <span class="info-key">방송 시간</span>
-        <span class="info-val">오후 9시</span>
-      </div>
-    </div>
-
-    <div class="about-card">
-      <h3 class="about-card-title">좋아하는 것</h3>
-      <div class="tag-cloud">
-        <span class="tag">🐱 고양이</span>
-        <span class="tag">✨ 예쁜 것</span>
-        <span class="tag">🥺 귀여운 것</span>
-        <span class="tag">🎮 스팀 게임</span>
-        <span class="tag">😱 공포 게임</span>
-        <span class="tag">🎵 K-POP</span>
-        <span class="tag">🎼 발라드</span>
-        <span class="tag">🎸 인디</span>
-      </div>
-
-      <h3 class="about-card-title" style="margin-top: 1.5rem;">방송 컨텐츠</h3>
-      <div class="tag-cloud">
-        <span class="tag">💬 소통</span>
-        <span class="tag">🎮 게임</span>
-        <span class="tag">🎤 가끔 노래</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LINKS -->
-<section class="section links-section reveal" id="links">
-  <div class="section-header">
-    <h2 class="section-title">링크</h2>
-    <div class="section-line"></div>
-  </div>
-
-  <div class="link-grid">
-    <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank" class="link-card">
-      <div class="link-icon soop">📺</div>
-      <div>
-        <div class="link-name">SOOP 방송국</div>
-        <div class="link-handle">hiroogi0901</div>
-      </div>
-    </a>
-    <a href="https://www.youtube.com/@히루기" target="_blank" class="link-card">
-      <div class="link-icon yt">▶</div>
-      <div>
-        <div class="link-name">YouTube</div>
-        <div class="link-handle">@히루기</div>
-      </div>
-    </a>
-    <a href="https://vod.sooplive.com/player/192166221" target="_blank" class="link-card">
-      <div class="link-icon soop">🎵</div>
-      <div>
-        <div class="link-name">노래 클립</div>
-        <div class="link-handle">SOOP VOD</div>
-      </div>
-    </a>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <span>© 2026 히루기♥ · 루냥이의 방</span>
@@ -597,113 +509,13 @@
 </footer>
 
 <script>
-  const SUPABASE_URL  = 'https://xjgzdngivwjemcuzwsiw.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqZ3pkbmdpdndqZW1jdXp3c2l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzI2NDcsImV4cCI6MjA5NDc0ODY0N30.dm1CYfoh_kVm-XDzbclOzt7qQezrk7ocSbNBMYF_v3M';
-
-  let calYear, calMonth, scheduleMap = {};
-
-  // 이번달로 초기화
-  const now = new Date();
-  calYear  = now.getFullYear();
-  calMonth = now.getMonth(); // 0-indexed
-
-  // Supabase에서 해당 월 일정 가져오기
-  async function fetchSchedule(year, month) {
-    const from = `${year}-${String(month+1).padStart(2,'0')}-01`;
-    const lastDay = new Date(year, month+1, 0).getDate();
-    const to   = `${year}-${String(month+1).padStart(2,'0')}-${lastDay}`;
-
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/stream_schedule?select=*&scheduled_date=gte.${from}&scheduled_date=lte.${to}&order=scheduled_date`,
-      { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } }
-    );
-    const data = await res.json();
-
-    scheduleMap = {};
-    data.forEach(row => { scheduleMap[row.scheduled_date] = row; });
-  }
-
-  // 달력 렌더링
-  function renderCalendar() {
-    const grid  = document.getElementById('cal-grid');
-    const label = document.getElementById('cal-month');
-    const note  = document.getElementById('schedule-note');
-
-    label.textContent = `${calYear}년 ${calMonth + 1}월`;
-
-    const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=일
-    const lastDate = new Date(calYear, calMonth + 1, 0).getDate();
-    const todayStr = now.toISOString().slice(0, 10);
-
-    let html = '';
-
-    // 앞 빈칸
-    for (let i = 0; i < firstDay; i++) {
-      html += `<div class="cal-cell empty"></div>`;
-    }
-
-    for (let d = 1; d <= lastDate; d++) {
-      const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      const row = scheduleMap[dateStr];
-      const isToday = dateStr === todayStr;
-
-      if (row) {
-        const time = row.start_time ? row.start_time.slice(0,5) : '';
-        const cancelled = !row.is_active;
-        html += `
-          <div class="cal-cell ${cancelled ? 'cancelled' : 'has-stream'} ${isToday ? 'today' : ''}">
-            <span class="cal-date">${d}</span>
-            ${cancelled
-              ? `<span class="cal-time">휴방</span>`
-              : `<span class="cal-dot"></span><span class="cal-time">${time}</span>`
-            }
-          </div>`;
-      } else {
-        html += `
-          <div class="cal-cell normal ${isToday ? 'today' : ''}">
-            <span class="cal-date">${d}</span>
-          </div>`;
-      }
-    }
-
-    grid.innerHTML = html;
-
-    const count = Object.values(scheduleMap).filter(r => r.is_active).length;
-    note.textContent = count > 0
-      ? `이번 달 방송 ${count}회 예정`
-      : '이번 달 등록된 일정이 없어요';
-  }
-
-  async function loadMonth() {
-    document.getElementById('schedule-note').textContent = '불러오는 중...';
-    await fetchSchedule(calYear, calMonth);
-    renderCalendar();
-  }
-
-  document.getElementById('cal-prev').addEventListener('click', () => {
-    calMonth--;
-    if (calMonth < 0) { calMonth = 11; calYear--; }
-    loadMonth();
-  });
-  document.getElementById('cal-next').addEventListener('click', () => {
-    calMonth++;
-    if (calMonth > 11) { calMonth = 0; calYear++; }
-    loadMonth();
-  });
-
-  // 스크롤 nav
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', scrollY > 60);
   });
-
-  // reveal
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-
-  // 초기 로드
-  loadMonth();
 </script>
 </body>
 </html>

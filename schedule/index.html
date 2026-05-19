@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>방송일정 — 히루기♥</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:    #FFFAF7;
+    --pink:  #E8A0BC;
+    --text:  #2D1A24;
+    --beige: #F5ECD7;
+  }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    padding: 1.1rem 8vw;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(232,160,188,0.18);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(232,160,188,0.3);
+  }
+  .nav-logo { font-size: 1.2rem; font-weight: 700; color: var(--text); text-decoration: none; }
+  .nav-back { font-size: 13px; color: rgba(45,26,36,0.6); text-decoration: none; }
+  .nav-back:hover { color: var(--text); }
+
+  .container { max-width: 720px; margin: 0 auto; padding: 2.5rem 5vw 4rem; }
+
+  .cal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .cal-title { font-size: 1.4rem; font-weight: 700; }
+  .cal-nav { display: flex; align-items: center; gap: 10px; }
+  .cal-btn {
+    background: rgba(232,160,188,0.15);
+    border: 1px solid rgba(232,160,188,0.35);
+    border-radius: 8px;
+    width: 32px; height: 32px;
+    font-size: 17px; color: var(--text);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .cal-btn:hover { background: rgba(232,160,188,0.3); }
+  .cal-month-label { font-size: 14px; font-weight: 700; min-width: 80px; text-align: center; }
+
+  .cal-weekdays {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 4px; margin-bottom: 4px;
+  }
+  .cal-weekdays span {
+    text-align: center; font-size: 12px;
+    color: rgba(45,26,36,0.6); font-weight: 500; padding: 4px 0;
+  }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-cell {
+    aspect-ratio: 1; border-radius: 10px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 3px; min-height: 60px;
+  }
+  .cal-cell.empty { background: transparent; }
+  .cal-cell.normal { background: #fff; border: 1px solid rgba(45,26,36,0.07); }
+  .cal-cell.has-stream {
+    background: rgba(232,160,188,0.2);
+    border: 1px solid rgba(232,160,188,0.4);
+    cursor: pointer;
+  }
+  .cal-cell.has-stream:hover { background: rgba(232,160,188,0.32); }
+  .cal-cell.today { border: 1.5px solid var(--pink) !important; }
+  .cal-cell.today .cal-date { color: var(--pink); font-weight: 700; }
+  .cal-cell.cancelled { background: rgba(45,26,36,0.03); border: 1px solid rgba(45,26,36,0.08); }
+  .cal-cell.cancelled .cal-date { text-decoration: line-through; color: rgba(45,26,36,0.3); }
+  .cal-date { font-size: 14px; font-weight: 500; color: rgba(45,26,36,0.8); line-height: 1; }
+  .cal-time { font-size: 11px; color: rgba(45,26,36,0.65); font-weight: 500; }
+  .cal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--pink); }
+
+  .schedule-note {
+    margin-top: 1.25rem; font-size: 13px;
+    color: rgba(45,26,36,0.6);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .schedule-note::before {
+    content: ''; display: inline-block;
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--pink);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+  /* 일정 리스트 */
+  .stream-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 8px; }
+  .stream-item {
+    display: flex; align-items: center; gap: 14px;
+    background: #fff; border: 1px solid rgba(45,26,36,0.08);
+    border-radius: 12px; padding: 1rem 1.25rem;
+  }
+  .stream-item.cancelled { opacity: 0.5; }
+  .stream-date-badge {
+    background: rgba(232,160,188,0.2);
+    border: 1px solid rgba(232,160,188,0.4);
+    border-radius: 8px; padding: 4px 10px;
+    font-size: 12px; font-weight: 700;
+    color: var(--text); white-space: nowrap;
+    text-align: center; min-width: 52px;
+  }
+  .stream-item.cancelled .stream-date-badge {
+    background: rgba(45,26,36,0.05);
+    border-color: rgba(45,26,36,0.1);
+  }
+  .stream-info { flex: 1; }
+  .stream-title { font-size: 14px; font-weight: 500; color: var(--text); }
+  .stream-time { font-size: 12px; color: rgba(45,26,36,0.55); margin-top: 2px; }
+  .stream-badge-cancel {
+    font-size: 11px; color: rgba(45,26,36,0.4);
+    background: rgba(45,26,36,0.06);
+    border-radius: 20px; padding: 2px 8px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="nav-back">← 돌아가기</a>
+  <a href="../" class="nav-logo">히루기♥</a>
+  <span style="width:64px;"></span>
+</nav>
+
+<div class="container">
+  <div class="cal-header">
+    <h1 class="cal-title">방송 일정</h1>
+    <div class="cal-nav">
+      <button class="cal-btn" id="cal-prev">‹</button>
+      <span class="cal-month-label" id="cal-month"></span>
+      <button class="cal-btn" id="cal-next">›</button>
+    </div>
+  </div>
+
+  <div class="cal-weekdays">
+    <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+  </div>
+  <div class="cal-grid" id="cal-grid"></div>
+  <p class="schedule-note" id="schedule-note">불러오는 중...</p>
+
+  <div class="stream-list" id="stream-list"></div>
+</div>
+
+<script>
+  const SUPABASE_URL  = 'https://xjgzdngivwjemcuzwsiw.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqZ3pkbmdpdndqZW1jdXp3c2l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzI2NDcsImV4cCI6MjA5NDc0ODY0N30.dm1CYfoh_kVm-XDzbclOzt7qQezrk7ocSbNBMYF_v3M';
+
+  const now = new Date();
+  let calYear = now.getFullYear(), calMonth = now.getMonth();
+  let scheduleMap = {}, scheduleList = [];
+
+  async function fetchSchedule(year, month) {
+    const from = `${year}-${String(month+1).padStart(2,'0')}-01`;
+    const to   = `${year}-${String(month+1).padStart(2,'0')}-${new Date(year, month+1, 0).getDate()}`;
+    const res  = await fetch(
+      `${SUPABASE_URL}/rest/v1/stream_schedule?select=*&scheduled_date=gte.${from}&scheduled_date=lte.${to}&order=scheduled_date`,
+      { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } }
+    );
+    const data = await res.json();
+    scheduleMap = {};
+    scheduleList = data;
+    data.forEach(row => { scheduleMap[row.scheduled_date] = row; });
+  }
+
+  function renderCalendar() {
+    const grid    = document.getElementById('cal-grid');
+    const label   = document.getElementById('cal-month');
+    const note    = document.getElementById('schedule-note');
+    const list    = document.getElementById('stream-list');
+    const todayStr = now.toISOString().slice(0, 10);
+
+    label.textContent = `${calYear}년 ${calMonth + 1}월`;
+
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const lastDate = new Date(calYear, calMonth + 1, 0).getDate();
+    const DAY_KR   = ['일','월','화','수','목','금','토'];
+
+    // 달력
+    let html = '';
+    for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
+    for (let d = 1; d <= lastDate; d++) {
+      const ds  = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const row = scheduleMap[ds];
+      const isToday = ds === todayStr;
+      if (row) {
+        const time = row.start_time ? row.start_time.slice(0,5) : '';
+        const cls  = row.is_active ? 'has-stream' : 'cancelled';
+        html += `<div class="cal-cell ${cls} ${isToday?'today':''}">
+          <span class="cal-date">${d}</span>
+          ${row.is_active ? `<span class="cal-dot"></span><span class="cal-time">${time}</span>` : `<span class="cal-time">휴방</span>`}
+        </div>`;
+      } else {
+        html += `<div class="cal-cell normal ${isToday?'today':''}"><span class="cal-date">${d}</span></div>`;
+      }
+    }
+    grid.innerHTML = html;
+
+    // 방송 수
+    const count = scheduleList.filter(r => r.is_active).length;
+    note.textContent = count > 0 ? `이번 달 방송 ${count}회 예정` : '이번 달 등록된 일정이 없어요';
+
+    // 리스트
+    if (scheduleList.length === 0) { list.innerHTML = ''; return; }
+    list.innerHTML = scheduleList.map(row => {
+      const d    = new Date(row.scheduled_date);
+      const day  = DAY_KR[d.getDay()];
+      const time = row.start_time ? row.start_time.slice(0,5) : '';
+      const mm   = String(d.getMonth()+1).padStart(2,'0');
+      const dd   = String(d.getDate()).padStart(2,'0');
+      return `<div class="stream-item ${row.is_active?'':'cancelled'}">
+        <div class="stream-date-badge">${mm}/${dd}<br><span style="font-weight:400;font-size:11px;">${day}</span></div>
+        <div class="stream-info">
+          <div class="stream-title">${row.title || '방송'}</div>
+          <div class="stream-time">${time ? `오후 ${time.replace('21','9')}` : ''} ${row.note ? `· ${row.note}` : ''}</div>
+        </div>
+        ${!row.is_active ? '<span class="stream-badge-cancel">휴방</span>' : ''}
+      </div>`;
+    }).join('');
+  }
+
+  async function loadMonth() {
+    document.getElementById('schedule-note').textContent = '불러오는 중...';
+    await fetchSchedule(calYear, calMonth);
+    renderCalendar();
+  }
+
+  document.getElementById('cal-prev').onclick = () => { if(--calMonth < 0){calMonth=11;calYear--;} loadMonth(); };
+  document.getElementById('cal-next').onclick = () => { if(++calMonth > 11){calMonth=0;calYear++;} loadMonth(); };
+
+  loadMonth();
+</script>
+</body>
+</html>
