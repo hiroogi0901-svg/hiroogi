@@ -57,8 +57,8 @@
     position: relative; z-index: 1;
     max-width: 680px; margin: 0 auto;
     display: grid; grid-template-columns: 1.4fr 2fr;
-    height: calc(100vh - 48px - 36px);
-    margin-top: 48px;
+    height: calc(100vh - 44px - 44px);
+    margin-top: 44px;
     align-items: stretch;
   }
 
@@ -125,7 +125,7 @@
     line-height: 1; letter-spacing: -0.01em;
     color: var(--text);
   }
-  .name-main em { color: var(--pink); font-style: normal; }
+  .name-main em { color: var(--text); font-style: normal; }
   .name-sub {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 0.65rem; font-weight: 300;
@@ -162,13 +162,13 @@
   .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; animation: riseIn 0.8s 0.75s both; }
   .tag {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 0.63rem; font-weight: 400;
+    font-size: 0.63rem; font-weight: 500;
     padding: 0.22rem 0.7rem; border-radius: 999px;
-    border: 1px solid rgba(232,160,188,0.3);
-    color: var(--pink); background: rgba(232,160,188,0.06);
+    border: 1px solid rgba(232,160,188,0.6);
+    color: #c0607e; background: rgba(232,160,188,0.14);
     transition: all 0.2s; cursor: default;
   }
-  .tag:hover { background: rgba(232,160,188,0.14); transform: translateY(-1px); }
+  .tag:hover { background: rgba(232,160,188,0.26); transform: translateY(-1px); }
 
   .links { display: flex; gap: 0.5rem; flex-wrap: wrap; animation: riseIn 0.8s 0.85s both; }
   .btn {
@@ -190,23 +190,27 @@
   /* FOOTER */
   footer {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-    padding: 0.5rem 0;
+    padding: 0.9rem 0;
     background: rgba(245,236,215,0.88); backdrop-filter: blur(12px);
     border-top: 1px solid rgba(45,26,36,0.07);
   }
-  .footer-inner { max-width: 680px; margin: 0 auto; padding: 0 5vw; display: flex; justify-content: space-between; align-items: center; font-family: 'Noto Sans KR', sans-serif; font-size: 10px; color: rgba(45,26,36,0.38); }
+  .footer-inner { max-width: 680px; margin: 0 auto; padding: 0 5vw; font-family: 'Noto Sans KR', sans-serif; font-size: 10px; color: rgba(45,26,36,0.38); }
   footer a { color: var(--pink); text-decoration: none; }
 
   @media (max-width: 640px) {
     html, body { overflow: auto; }
-    .scene { grid-template-columns: 1fr; min-height: auto; padding: 48px 0 40px; }
-    .visual { padding: 1.5rem 1.5rem 0.5rem; justify-content: flex-start; }
-    .visual::after { background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%); }
-    .photo-frame { width: 120px; }
-    .info { padding: 0.75rem 1.5rem 1.5rem; gap: 0.75rem; }
+    .scene { grid-template-columns: 1fr; min-height: auto; margin-top: 44px; padding-bottom: 56px; }
+    .visual { padding: 0; justify-content: center; overflow: hidden; height: 56vw; }
+    .visual::after { background: linear-gradient(to bottom, transparent 50%, var(--bg) 100%); }
+    .photo-frame { width: 100%; border-radius: 0; }
+    .photo-frame img, .photo-placeholder { aspect-ratio: 23/10; border-radius: 0; object-position: top center; }
+    .photo-frame::before { display: none; }
+    .stamp { display: none; }
+    .info { padding: 1rem 1.25rem 1.25rem; gap: 0.7rem; }
     .name-main { font-size: clamp(1.8rem, 8vw, 2.4rem); }
-    .nav-links { display: none; }
-    .nav-inner, .footer-inner { padding: 0 1.5rem; }
+    .nav-links { display: flex; }
+    .nav-links a { font-size: 11px; }
+    .nav-inner, .footer-inner { padding: 0 1.25rem; }
     footer { position: sticky; }
   }
 </style>
@@ -283,7 +287,6 @@
 <footer>
   <div class="footer-inner">
     <span>© 2026 히루기♥ · 루냥이의 방</span>
-    <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank">SOOP →</a>
   </div>
 </footer>
 
