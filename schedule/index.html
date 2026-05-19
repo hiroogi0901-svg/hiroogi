@@ -27,12 +27,8 @@
 
   .container {
     max-width: 860px; margin: 0 auto;
-    padding: 2rem 5vw 0;
-    min-height: calc(100vh - 44px - 56px);
-    display: flex; flex-direction: column;
+    padding: 2rem 5vw 2rem;
   }
-
-  .cal-spacer { flex: 1; } /* 달력 아래 남는 공간 흡수 */
 
   /* 헤더 */
   .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
@@ -42,8 +38,8 @@
   .cal-btn:hover { background: rgba(232,160,188,0.3); }
   .cal-month-label { font-size: 14px; font-weight: 700; min-width: 76px; text-align: center; }
 
-  /* 달력 래퍼 — 남은 공간 꽉 채우기 */
-  .cal-grid-wrap { flex: 1; display: flex; flex-direction: column; }
+  /* 달력 래퍼 */
+  .cal-grid-wrap { display: block; }
 
   /* 진입 애니메이션 */
   @keyframes fadeUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
@@ -66,11 +62,11 @@
   .cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    grid-auto-rows: 1fr;
+    grid-auto-rows: 118px;
     gap: 4px;
-    flex: 1;
   }
   .cal-cell {
+    height: 118px;
     border-radius: 10px;
     display: flex; flex-direction: column;
     align-items: flex-start; padding: 7px 6px; gap: 3px;
@@ -151,7 +147,7 @@
   }
   @media (min-width: 641px) {
     .mobile-section { display: none; }
-    .cal-grid-wrap { display: flex; }
+    .cal-grid-wrap { display: block; }
   }
 </style>
 </head>
@@ -188,7 +184,6 @@
   <div class="cal-grid-wrap">
     <div class="cal-grid" id="cal-grid"></div>
   </div>
-  <div class="cal-spacer"></div>
 
   <!-- 모바일 주간 탭 + 리스트 -->
   <div class="mobile-section">
