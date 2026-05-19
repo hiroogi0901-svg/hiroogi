@@ -16,116 +16,128 @@
                 radial-gradient(ellipse at 20% 80%, rgba(245,236,215,0.5) 0%, transparent 50%);
   }
 
-  /* NAV */
   nav {
     position: sticky; top: 0; z-index: 100;
     padding: 1rem 0;
-    background: rgba(232,160,188,0.18);
-    backdrop-filter: blur(16px);
+    background: rgba(232,160,188,0.18); backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(232,160,188,0.3);
   }
-  .nav-inner {
-    max-width: 860px; margin: 0 auto; padding: 0 6vw;
-    display: flex; justify-content: space-between; align-items: center;
-  }
+  .nav-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; }
   .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--text); text-decoration: none; }
   .nav-back { font-size: 13px; color: rgba(45,26,36,0.6); text-decoration: none; }
   .nav-back:hover { color: var(--text); }
 
-  /* CONTAINER */
   .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 6vw 4rem; }
 
-  /* 달력 헤더 */
-  .cal-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 1.25rem;
-  }
+  /* 헤더 */
+  .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
   .cal-title { font-size: 1.3rem; font-weight: 700; }
   .cal-nav { display: flex; align-items: center; gap: 10px; }
-  .cal-btn {
-    background: rgba(232,160,188,0.15); border: 1px solid rgba(232,160,188,0.35);
-    border-radius: 8px; width: 30px; height: 30px;
-    font-size: 16px; color: var(--text); cursor: pointer; transition: background 0.15s;
-  }
+  .cal-btn { background: rgba(232,160,188,0.15); border: 1px solid rgba(232,160,188,0.35); border-radius: 8px; width: 30px; height: 30px; font-size: 16px; color: var(--text); cursor: pointer; transition: background 0.15s; }
   .cal-btn:hover { background: rgba(232,160,188,0.3); }
   .cal-month-label { font-size: 14px; font-weight: 700; min-width: 76px; text-align: center; }
 
-  /* 요일 헤더 */
+  /* 타입 범례 */
+  .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: rgba(45,26,36,0.6); }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* 달력 */
   .cal-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 4px; }
   .cal-weekdays span { text-align: center; font-size: 12px; font-weight: 600; padding: 5px 0; color: rgba(45,26,36,0.55); }
   .cal-weekdays span.sun { color: #E07070; }
   .cal-weekdays span.sat { color: #7090D0; }
 
-  /* 달력 그리드 */
   .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   .cal-cell {
-    aspect-ratio: 1; border-radius: 10px;
+    aspect-ratio: 1; border-radius: 10px; min-height: 72px;
     display: flex; flex-direction: column;
     align-items: flex-start; justify-content: flex-start;
-    padding: 8px 10px;
-    gap: 3px; min-height: 72px;
+    padding: 7px 8px; gap: 3px;
+    background: #fff; border: 1px solid rgba(45,26,36,0.07);
+    transition: box-shadow 0.2s, border-color 0.2s;
   }
-  .cal-cell.empty { background: transparent; border: none; }
-  .cal-cell.normal { background: #fff; border: 1px solid rgba(45,26,36,0.07); }
-  .cal-cell.has-stream { background: rgba(232,160,188,0.18); border: 1px solid rgba(232,160,188,0.4); }
-  .cal-cell.has-stream:hover { background: rgba(232,160,188,0.28); }
+  .cal-cell.empty { background: transparent; border: none; pointer-events: none; }
+  .cal-cell.has-stream { cursor: pointer; }
+  .cal-cell.has-stream:hover { box-shadow: 0 4px 14px rgba(232,160,188,0.2); border-color: var(--pink); }
   .cal-cell.today { border: 1.5px solid var(--pink) !important; }
   .cal-cell.today .cal-date { color: var(--pink); font-weight: 700; }
-  .cal-cell.cancelled { background: rgba(45,26,36,0.03); border: 1px solid rgba(45,26,36,0.07); }
-  .cal-cell.cancelled .cal-date { text-decoration: line-through; color: rgba(45,26,36,0.3); }
-
-  .cal-date { font-size: 14px; font-weight: 500; color: rgba(45,26,36,0.78); line-height: 1; }
+  .cal-cell.cancelled { opacity: 0.5; }
+  .cal-cell.cancelled .cal-date { text-decoration: line-through; }
+  .cal-date { font-size: 13px; font-weight: 500; color: rgba(45,26,36,0.78); line-height: 1; }
   .cal-cell.sun .cal-date { color: #E07070; }
   .cal-cell.sat .cal-date { color: #7090D0; }
-  .cal-cell.today .cal-date { color: var(--pink) !important; font-weight: 700; }
-  .cal-cell.cancelled .cal-date { text-decoration: line-through; color: rgba(45,26,36,0.28) !important; }
+  .cal-cell.today .cal-date { color: var(--pink) !important; }
 
-  .cal-time { font-size: 10px; color: rgba(45,26,36,0.6); font-weight: 500; }
-  .cal-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--pink); }
+  .cal-type-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 2px; }
+  .cal-time-sm { font-size: 9px; color: rgba(45,26,36,0.55); font-weight: 500; }
 
-  /* 방송 카운트 */
-  .stream-count {
-    margin-top: 1rem; font-size: 13px; color: rgba(45,26,36,0.55);
-  }
+  /* 카운트 */
+  .stream-count { margin: 1rem 0 1.5rem; font-size: 13px; color: rgba(45,26,36,0.55); }
 
-  /* 리스트 */
-  .stream-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 8px; }
+  /* 리스트 (데스크탑만) */
+  .stream-list { display: flex; flex-direction: column; gap: 8px; }
   .stream-item {
-    display: flex; align-items: center; gap: 14px;
+    display: flex; align-items: center; gap: 14px; cursor: pointer;
     background: #fff; border: 1px solid rgba(45,26,36,0.08);
     border-radius: 12px; padding: 1rem 1.25rem;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   }
+  .stream-item:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(232,160,188,0.18); border-color: var(--pink); }
   .stream-item.cancelled { opacity: 0.5; }
+
   .stream-date-badge {
-    background: rgba(232,160,188,0.18); border: 1px solid rgba(232,160,188,0.4);
-    border-radius: 8px; padding: 5px 10px; font-size: 12px; font-weight: 700;
-    color: var(--text); white-space: nowrap; text-align: center; min-width: 52px; line-height: 1.5;
+    flex-shrink: 0; min-width: 52px; text-align: center;
+    border-radius: 10px; padding: 6px 10px; line-height: 1.4;
+    font-size: 13px; font-weight: 700;
+    border: 1px solid rgba(232,160,188,0.4);
+    background: rgba(232,160,188,0.12);
   }
+  .stream-date-badge .dow { font-size: 11px; font-weight: 400; display: block; }
   .stream-item.cancelled .stream-date-badge { background: rgba(45,26,36,0.04); border-color: rgba(45,26,36,0.1); }
+
+  .stream-type-bar { width: 3px; height: 36px; border-radius: 4px; flex-shrink: 0; }
   .stream-info { flex: 1; }
-  .stream-title { font-size: 14px; font-weight: 500; }
-  .stream-time { font-size: 12px; color: rgba(45,26,36,0.5); margin-top: 2px; }
-  .stream-badge-cancel {
-    font-size: 11px; color: rgba(45,26,36,0.4);
-    background: rgba(45,26,36,0.06); border-radius: 20px; padding: 2px 8px;
+  .stream-title { font-size: 14px; font-weight: 600; }
+  .stream-sub { font-size: 12px; color: rgba(45,26,36,0.5); margin-top: 2px; }
+  .stream-type-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; color: #fff; font-weight: 600; flex-shrink: 0; }
+
+  /* 모달 */
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(45,26,36,0.3); z-index: 200; align-items: center; justify-content: center; }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 20px; padding: 2rem; width: 360px; max-width: 90vw;
+    position: relative;
   }
+  .modal-top { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+  .modal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .modal-type { font-size: 11px; color: rgba(45,26,36,0.5); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .modal-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .modal-date { font-size: 13px; color: rgba(45,26,36,0.55); margin-bottom: 0.4rem; }
+  .modal-time { font-size: 13px; color: rgba(45,26,36,0.55); margin-bottom: 0.8rem; }
+  .modal-desc { font-size: 13px; color: rgba(45,26,36,0.7); line-height: 1.7; border-top: 1px solid rgba(45,26,36,0.08); padding-top: 0.8rem; }
+  .modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 18px; cursor: pointer; color: rgba(45,26,36,0.4); }
+  .modal-close:hover { color: var(--text); }
 
   /* FOOTER */
   footer { background: var(--beige); border-top: 1px solid rgba(45,26,36,0.08); padding: 1.5rem 0; margin-top: 2rem; }
   .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(45,26,36,0.4); }
   footer a { color: var(--pink); text-decoration: none; }
 
-  /* MOBILE: 7일치 리스트만 */
+  /* 모바일 */
   @media (max-width: 640px) {
     .cal-grid-wrap { display: none; }
     .cal-weekdays { display: none; }
+    .legend { display: none; }
+    .stream-count { display: none; }
+    .stream-list { display: none; }   /* ← 2중 출력 방지 */
     .mobile-week { display: flex; flex-direction: column; gap: 8px; }
     .container { padding: 1.5rem 5vw 3rem; }
-    .nav-inner { padding: 0 5vw; }
-    .footer-inner { padding: 0 5vw; }
+    .nav-inner, .footer-inner { padding: 0 5vw; }
   }
   @media (min-width: 641px) {
     .mobile-week { display: none; }
+    .cal-grid-wrap { display: block; }
   }
 </style>
 </head>
@@ -151,6 +163,9 @@
     </div>
   </div>
 
+  <!-- 범례 -->
+  <div class="legend" id="legend"></div>
+
   <!-- 데스크탑: 달력 -->
   <div class="cal-weekdays">
     <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span>
@@ -161,8 +176,23 @@
   <p class="stream-count" id="stream-count"></p>
   <div class="stream-list" id="stream-list"></div>
 
-  <!-- 모바일: 7일치 리스트 -->
+  <!-- 모바일: 7일치 -->
   <div class="mobile-week" id="mobile-week"></div>
+</div>
+
+<!-- 팝업 모달 -->
+<div class="modal-bg" id="event-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-top">
+      <span class="modal-dot" id="modal-dot"></span>
+      <span class="modal-type" id="modal-type"></span>
+    </div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-date" id="modal-date"></div>
+    <div class="modal-time" id="modal-time"></div>
+    <div class="modal-desc" id="modal-desc" style="display:none;"></div>
+  </div>
 </div>
 
 <footer>
@@ -175,11 +205,37 @@
 <script>
   const SUPABASE_URL  = 'https://xjgzdngivwjemcuzwsiw.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqZ3pkbmdpdndqZW1jdXp3c2l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzI2NDcsImV4cCI6MjA5NDc0ODY0N30.dm1CYfoh_kVm-XDzbclOzt7qQezrk7ocSbNBMYF_v3M';
-  const DAY_KR = ['일','월','화','수','목','금','토'];
 
-  const now = new Date();
-  let calYear = now.getFullYear(), calMonth = now.getMonth();
-  let scheduleMap = {}, scheduleList = [];
+  const TYPE_COLORS = {
+    broadcast: '#E8A0BC',
+    game:      '#93C5FD',
+    song:      '#86EFAC',
+    collab:    '#FCA5A5',
+    event:     '#FCD34D',
+    rest:      '#C0B6D6',
+    other:     '#D1D5DB'
+  };
+  const TYPE_LABELS = {
+    broadcast: '방송',
+    game:      '게임',
+    song:      '노래',
+    collab:    '합방',
+    event:     '이벤트',
+    rest:      '휴방',
+    other:     '기타'
+  };
+
+  const DAY_KR  = ['일','월','화','수','목','금','토'];
+  const now     = new Date();
+  let calYear   = now.getFullYear(), calMonth = now.getMonth();
+  let scheduleMap = {}, scheduleList = [], allSchedules = [];
+
+  // 범례 렌더
+  function renderLegend() {
+    document.getElementById('legend').innerHTML = Object.entries(TYPE_LABELS).map(([k,v]) =>
+      `<div class="legend-item"><div class="legend-dot" style="background:${TYPE_COLORS[k]}"></div>${v}</div>`
+    ).join('');
+  }
 
   async function fetchSchedule(year, month) {
     const from = `${year}-${String(month+1).padStart(2,'0')}-01`;
@@ -189,9 +245,30 @@
       { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } }
     );
     const data = await res.json();
-    scheduleMap = {};
+    scheduleMap  = {};
     scheduleList = data;
+    allSchedules = data;
     data.forEach(row => { scheduleMap[row.scheduled_date] = row; });
+  }
+
+  async function fetchExtra(year, month) {
+    const from = `${year}-${String(month+1).padStart(2,'0')}-01`;
+    const to   = `${year}-${String(month+1).padStart(2,'0')}-${new Date(year, month+1, 0).getDate()}`;
+    const res  = await fetch(
+      `${SUPABASE_URL}/rest/v1/stream_schedule?select=*&scheduled_date=gte.${from}&scheduled_date=lte.${to}`,
+      { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } }
+    );
+    const data = await res.json();
+    data.forEach(row => { scheduleMap[row.scheduled_date] = row; });
+  }
+
+  function getColor(row) {
+    if (!row.is_active) return TYPE_COLORS.rest;
+    return row.color || TYPE_COLORS[row.content_type] || TYPE_COLORS.broadcast;
+  }
+  function getLabel(row) {
+    if (!row.is_active) return TYPE_LABELS.rest;
+    return TYPE_LABELS[row.content_type] || row.content_type || TYPE_LABELS.broadcast;
   }
 
   function renderCalendar() {
@@ -213,20 +290,20 @@
       const ds      = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       const row     = scheduleMap[ds];
       const isToday = ds === todayStr;
-      const dow     = new Date(ds).getDay(); // 0=일, 6=토
+      const dow     = new Date(ds).getDay();
       const dowCls  = dow === 0 ? 'sun' : dow === 6 ? 'sat' : '';
 
       if (row) {
+        const c    = getColor(row);
         const time = row.start_time ? row.start_time.slice(0,5) : '';
-        const cls  = row.is_active ? 'has-stream' : 'cancelled';
-        html += `<div class="cal-cell ${cls} ${isToday?'today':''} ${dowCls}">
+        const cls  = `cal-cell has-stream ${row.is_active?'':'cancelled'} ${isToday?'today':''} ${dowCls}`;
+        html += `<div class="${cls}" onclick="showModal('${row.id}')">
           <span class="cal-date">${d}</span>
-          ${row.is_active
-            ? `<span class="cal-dot"></span><span class="cal-time">${time}</span>`
-            : `<span class="cal-time" style="font-size:9px;">휴방</span>`}
+          <div class="cal-type-dot" style="background:${c}"></div>
+          <span class="cal-time-sm">${time}</span>
         </div>`;
       } else {
-        html += `<div class="cal-cell normal ${isToday?'today':''} ${dowCls}"><span class="cal-date">${d}</span></div>`;
+        html += `<div class="cal-cell ${isToday?'today':''} ${dowCls}"><span class="cal-date">${d}</span></div>`;
       }
     }
     grid.innerHTML = html;
@@ -235,26 +312,29 @@
     const cnt = scheduleList.filter(r => r.is_active).length;
     count.textContent = cnt > 0 ? `이번 달 방송 ${cnt}회 예정` : '';
 
-    // 리스트
+    // 리스트 (데스크탑)
     list.innerHTML = scheduleList.length === 0 ? '' : scheduleList.map(row => {
+      const c   = getColor(row);
+      const lbl = getLabel(row);
       const d   = new Date(row.scheduled_date);
-      const day = DAY_KR[d.getDay()];
-      const time = row.start_time ? row.start_time.slice(0,5) : '';
+      const dow = DAY_KR[d.getDay()];
       const mm  = String(d.getMonth()+1).padStart(2,'0');
       const dd  = String(d.getDate()).padStart(2,'0');
-      return `<div class="stream-item ${row.is_active?'':'cancelled'}">
-        <div class="stream-date-badge">${mm}/${dd}<br><span style="font-weight:400;font-size:11px;">${day}</span></div>
+      const time = row.start_time ? row.start_time.slice(0,5) : '';
+      const dowColor = d.getDay()===0?'color:#E07070':d.getDay()===6?'color:#7090D0':'';
+      return `<div class="stream-item ${row.is_active?'':'cancelled'}" onclick="showModal('${row.id}')">
+        <div class="stream-date-badge">${mm}/${dd}<span class="dow" style="${dowColor}">${dow}</span></div>
+        <div class="stream-type-bar" style="background:${c}"></div>
         <div class="stream-info">
           <div class="stream-title">${row.title || '방송'}</div>
-          <div class="stream-time">${time}${row.note ? ` · ${row.note}` : ''}</div>
+          <div class="stream-sub">${time}${row.description ? ' · ' + row.description.slice(0,30) : ''}</div>
         </div>
-        ${!row.is_active ? '<span class="stream-badge-cancel">휴방</span>' : ''}
+        <span class="stream-type-badge" style="background:${c}">${lbl}</span>
       </div>`;
     }).join('');
   }
 
   function renderMobileWeek() {
-    // 오늘부터 7일치
     const wrap = document.getElementById('mobile-week');
     const items = [];
     for (let i = 0; i < 7; i++) {
@@ -266,57 +346,69 @@
       const isToday  = i === 0;
       const mm = String(d.getMonth()+1).padStart(2,'0');
       const dd = String(d.getDate()).padStart(2,'0');
-      const dowColor = dow===0 ? 'color:#E07070;' : dow===6 ? 'color:#7090D0;' : '';
+      const dowColor = dow===0?'color:#E07070':dow===6?'color:#7090D0':'';
 
       if (row) {
+        const c    = getColor(row);
+        const lbl  = getLabel(row);
         const time = row.start_time ? row.start_time.slice(0,5) : '';
-        items.push(`<div class="stream-item ${row.is_active?'':'cancelled'}">
-          <div class="stream-date-badge" style="${isToday?'border-color:var(--pink);':''}">${mm}/${dd}<br><span style="font-weight:400;font-size:11px;${dowColor}">${dowLabel}</span></div>
+        items.push(`<div class="stream-item ${row.is_active?'':'cancelled'}" onclick="showModal('${row.id}')">
+          <div class="stream-date-badge" style="${isToday?'border-color:var(--pink);':''}">${mm}/${dd}<span class="dow" style="${dowColor}">${dowLabel}</span></div>
+          <div class="stream-type-bar" style="background:${c}"></div>
           <div class="stream-info">
             <div class="stream-title">${row.title || '방송'}</div>
-            <div class="stream-time">${time}${row.note ? ` · ${row.note}` : ''}</div>
+            <div class="stream-sub">${time}${row.description ? ' · '+row.description.slice(0,20) : ''}</div>
           </div>
-          ${!row.is_active ? '<span class="stream-badge-cancel">휴방</span>' : ''}
+          <span class="stream-type-badge" style="background:${c}">${lbl}</span>
         </div>`);
       } else {
-        items.push(`<div class="stream-item" style="opacity:0.4;">
-          <div class="stream-date-badge">${mm}/${dd}<br><span style="font-weight:400;font-size:11px;${dowColor}">${dowLabel}</span></div>
-          <div class="stream-info"><div class="stream-title" style="color:rgba(45,26,36,0.4);">방송 없음</div></div>
+        items.push(`<div class="stream-item" style="opacity:0.35;pointer-events:none;">
+          <div class="stream-date-badge">${mm}/${dd}<span class="dow" style="${dowColor}">${dowLabel}</span></div>
+          <div class="stream-type-bar" style="background:rgba(45,26,36,0.1)"></div>
+          <div class="stream-info"><div class="stream-title" style="color:rgba(45,26,36,0.35);">방송 없음</div></div>
         </div>`);
       }
     }
     wrap.innerHTML = items.join('');
   }
 
-  async function loadMonth() {
-    await fetchSchedule(calYear, calMonth);
-    renderCalendar();
-
-    // 모바일: 이번달 + 필요시 다음달도 fetch
-    const todayMonth = now.getMonth();
-    if (calYear === now.getFullYear() && calMonth === todayMonth) {
-      // 7일치 중 다음달 포함 가능 → 다음달도 fetch
-      const nextM = todayMonth === 11 ? 0 : todayMonth + 1;
-      const nextY = todayMonth === 11 ? now.getFullYear()+1 : now.getFullYear();
-      await fetchScheduleExtra(nextY, nextM);
-    }
-    renderMobileWeek();
+  function showModal(id) {
+    const row = allSchedules.find(r => String(r.id) === String(id));
+    if (!row) return;
+    const c    = getColor(row);
+    const lbl  = getLabel(row);
+    const d    = new Date(row.scheduled_date);
+    const time = row.start_time ? row.start_time.slice(0,5) : '';
+    document.getElementById('modal-dot').style.background  = c;
+    document.getElementById('modal-type').textContent      = lbl;
+    document.getElementById('modal-title').textContent     = row.title || '방송';
+    document.getElementById('modal-date').textContent      = `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${DAY_KR[d.getDay()]})`;
+    document.getElementById('modal-time').textContent      = time ? `${time} 방송 시작` : '';
+    const desc = document.getElementById('modal-desc');
+    if (row.description) { desc.textContent = row.description; desc.style.display = 'block'; }
+    else { desc.style.display = 'none'; }
+    document.getElementById('event-modal').classList.add('open');
   }
 
-  async function fetchScheduleExtra(year, month) {
-    const from = `${year}-${String(month+1).padStart(2,'0')}-01`;
-    const to   = `${year}-${String(month+1).padStart(2,'0')}-${new Date(year, month+1, 0).getDate()}`;
-    const res  = await fetch(
-      `${SUPABASE_URL}/rest/v1/stream_schedule?select=*&scheduled_date=gte.${from}&scheduled_date=lte.${to}`,
-      { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } }
-    );
-    const data = await res.json();
-    data.forEach(row => { scheduleMap[row.scheduled_date] = row; });
+  function closeModal() { document.getElementById('event-modal').classList.remove('open'); }
+  document.getElementById('event-modal').addEventListener('click', e => { if (e.target === document.getElementById('event-modal')) closeModal(); });
+
+  async function loadMonth() {
+    await fetchSchedule(calYear, calMonth);
+    // 모바일 7일치 다음달 포함
+    if (calYear === now.getFullYear() && calMonth === now.getMonth()) {
+      const nm = now.getMonth() === 11 ? 0 : now.getMonth() + 1;
+      const ny = now.getMonth() === 11 ? now.getFullYear()+1 : now.getFullYear();
+      await fetchExtra(ny, nm);
+    }
+    renderCalendar();
+    renderMobileWeek();
   }
 
   document.getElementById('cal-prev').onclick = () => { if(--calMonth < 0){calMonth=11;calYear--;} loadMonth(); };
   document.getElementById('cal-next').onclick = () => { if(++calMonth > 11){calMonth=0;calYear++;} loadMonth(); };
 
+  renderLegend();
   loadMonth();
 </script>
 </body>

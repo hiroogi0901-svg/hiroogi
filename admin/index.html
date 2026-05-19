@@ -138,7 +138,17 @@
   .modal .form-group { margin-bottom: 12px; }
   .modal-btns { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.25rem; }
 
-  .toast {
+  .type-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px; }
+  .type-chip {
+    padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;
+    font-family: inherit; cursor: pointer;
+    background: rgba(45,26,36,0.05); border: 1.5px solid rgba(45,26,36,0.12);
+    color: rgba(45,26,36,0.6); transition: all 0.15s;
+  }
+  .type-chip.active {
+    background: color-mix(in srgb, var(--c) 25%, white);
+    border-color: var(--c); color: var(--text); font-weight: 700;
+  }
     position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
     background: var(--text); color: #fff; font-size: 13px;
     padding: 10px 20px; border-radius: 20px; opacity: 0;
@@ -182,6 +192,19 @@
     <!-- 추가 폼 -->
     <div class="add-form">
       <h2>일정 추가</h2>
+      <!-- 타입 체크박스 -->
+      <div class="form-group" style="margin-bottom:12px;">
+        <label>방송 유형</label>
+        <div class="type-chips" id="f-type-chips">
+          <button type="button" class="type-chip active" data-type="broadcast" style="--c:#E8A0BC">방송</button>
+          <button type="button" class="type-chip" data-type="game" style="--c:#93C5FD">게임</button>
+          <button type="button" class="type-chip" data-type="song" style="--c:#86EFAC">노래</button>
+          <button type="button" class="type-chip" data-type="collab" style="--c:#FCA5A5">합방</button>
+          <button type="button" class="type-chip" data-type="event" style="--c:#FCD34D">이벤트</button>
+          <button type="button" class="type-chip" data-type="rest" style="--c:#C0B6D6">휴방</button>
+          <button type="button" class="type-chip" data-type="other" style="--c:#D1D5DB">기타</button>
+        </div>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label>날짜</label>
@@ -192,15 +215,12 @@
           <input type="time" id="f-time" value="21:00">
         </div>
         <div class="form-group">
-          <label>상태</label>
-          <select id="f-active">
-            <option value="true">방송</option>
-            <option value="false">휴방</option>
-          </select>
+          <label>제목 (기본: 방송)</label>
+          <input type="text" id="f-title" placeholder="비워두면 '방송'으로 저장">
         </div>
         <div class="form-group">
-          <label>제목 / 메모 (선택)</label>
-          <input type="text" id="f-title" placeholder="예: 공포게임, 콜라보">
+          <label>내용 설명 (선택)</label>
+          <input type="text" id="f-desc" placeholder="예: 공포게임 정주행">
         </div>
         <button class="form-add-btn" onclick="addSchedule()">추가</button>
       </div>
@@ -235,15 +255,22 @@
   <div class="modal">
     <h3>일정 수정</h3>
     <input type="hidden" id="e-id">
+    <div class="form-group" style="margin-bottom:12px;">
+      <label>방송 유형</label>
+      <div class="type-chips" id="e-type-chips">
+        <button type="button" class="type-chip" data-type="broadcast" style="--c:#E8A0BC">방송</button>
+        <button type="button" class="type-chip" data-type="game" style="--c:#93C5FD">게임</button>
+        <button type="button" class="type-chip" data-type="song" style="--c:#86EFAC">노래</button>
+        <button type="button" class="type-chip" data-type="collab" style="--c:#FCA5A5">합방</button>
+        <button type="button" class="type-chip" data-type="event" style="--c:#FCD34D">이벤트</button>
+        <button type="button" class="type-chip" data-type="rest" style="--c:#C0B6D6">휴방</button>
+        <button type="button" class="type-chip" data-type="other" style="--c:#D1D5DB">기타</button>
+      </div>
+    </div>
     <div class="form-group"><label>날짜</label><input type="date" id="e-date"></div>
     <div class="form-group"><label>시작 시간</label><input type="time" id="e-time"></div>
-    <div class="form-group"><label>상태</label>
-      <select id="e-active">
-        <option value="true">방송</option>
-        <option value="false">휴방</option>
-      </select>
-    </div>
-    <div class="form-group"><label>제목 / 메모</label><input type="text" id="e-title" placeholder="예: 공포게임"></div>
+    <div class="form-group"><label>제목 (기본: 방송)</label><input type="text" id="e-title" placeholder="비워두면 '방송'으로 저장"></div>
+    <div class="form-group"><label>내용 설명 (선택)</label><input type="text" id="e-desc" placeholder="예: 공포게임 정주행"></div>
     <div class="modal-btns">
       <button class="btn-sm" onclick="closeModal()">취소</button>
       <button class="btn-sm primary" onclick="saveEdit()">저장</button>
@@ -317,6 +344,27 @@
     showAdmin();
   }
 
+  // ── 타입 칩 ──
+  function initChips(containerId) {
+    document.getElementById(containerId).querySelectorAll('.type-chip').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById(containerId).querySelectorAll('.type-chip').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  }
+  function getActiveType(containerId) {
+    const active = document.getElementById(containerId).querySelector('.type-chip.active');
+    return active ? active.dataset.type : 'broadcast';
+  }
+  function setActiveType(containerId, type) {
+    document.getElementById(containerId).querySelectorAll('.type-chip').forEach(b => {
+      b.classList.toggle('active', b.dataset.type === type);
+    });
+  }
+  initChips('f-type-chips');
+  initChips('e-type-chips');
+
   // ── CRUD ──
   async function loadSchedule() {
     const res  = await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule?select=*&order=scheduled_date.desc`, { headers: authHeaders() });
@@ -355,18 +403,26 @@
   }
 
   async function addSchedule() {
-    const date   = document.getElementById('f-date').value;
-    const time   = document.getElementById('f-time').value;
-    const active = document.getElementById('f-active').value === 'true';
-    const title  = document.getElementById('f-title').value.trim();
+    const date  = document.getElementById('f-date').value;
+    const time  = document.getElementById('f-time').value;
+    const title = document.getElementById('f-title').value.trim();
+    const desc  = document.getElementById('f-desc').value.trim();
+    const ctype = getActiveType('f-type-chips');
     if (!date || !time) { showToast('날짜와 시간을 입력해주세요'); return; }
-    await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule`, {
       method: 'POST', headers: authHeaders(),
-      body: JSON.stringify({ scheduled_date: date, start_time: time+':00', is_active: active, title: title || null })
+      body: JSON.stringify({
+        scheduled_date: date, start_time: time+':00',
+        is_active: ctype !== 'rest',
+        title: title || null, content_type: ctype, description: desc || null
+      })
     });
+    if (!res.ok) { showToast('저장 실패 — RLS 정책 확인'); return; }
     showToast('추가했어요 ✓');
-    document.getElementById('f-date').value = '';
+    document.getElementById('f-date').value  = '';
     document.getElementById('f-title').value = '';
+    document.getElementById('f-desc').value  = '';
+    setActiveType('f-type-chips', 'broadcast');
     loadSchedule();
   }
 
@@ -381,21 +437,27 @@
     document.getElementById('e-id').value    = row.id;
     document.getElementById('e-date').value  = row.scheduled_date;
     document.getElementById('e-time').value  = row.start_time ? row.start_time.slice(0,5) : '';
-    document.getElementById('e-active').value = String(row.is_active);
-    document.getElementById('e-title').value  = row.title || '';
+    document.getElementById('e-title').value = row.title || '';
+    document.getElementById('e-desc').value  = row.description || '';
+    setActiveType('e-type-chips', row.content_type || 'broadcast');
     document.getElementById('edit-modal').classList.add('open');
   }
   function closeModal() { document.getElementById('edit-modal').classList.remove('open'); }
 
   async function saveEdit() {
-    const id     = document.getElementById('e-id').value;
-    const date   = document.getElementById('e-date').value;
-    const time   = document.getElementById('e-time').value;
-    const active = document.getElementById('e-active').value === 'true';
-    const title  = document.getElementById('e-title').value.trim();
+    const id    = document.getElementById('e-id').value;
+    const date  = document.getElementById('e-date').value;
+    const time  = document.getElementById('e-time').value;
+    const title = document.getElementById('e-title').value.trim();
+    const desc  = document.getElementById('e-desc').value.trim();
+    const ctype = getActiveType('e-type-chips');
     await fetch(`${SUPABASE_URL}/rest/v1/stream_schedule?id=eq.${id}`, {
       method: 'PATCH', headers: authHeaders(),
-      body: JSON.stringify({ scheduled_date: date, start_time: time+':00', is_active: active, title: title || null })
+      body: JSON.stringify({
+        scheduled_date: date, start_time: time+':00',
+        is_active: ctype !== 'rest',
+        title: title || null, content_type: ctype, description: desc || null
+      })
     });
     closeModal();
     showToast('수정했어요 ✓');
