@@ -9,19 +9,14 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --bg: #FFFAF7; --pink: #E8A0BC; --text: #2D1A24; --beige: #F5ECD7; }
   body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
-
   .page-bg {
     position: fixed; inset: 0; z-index: -1;
     background: radial-gradient(ellipse at 70% 20%, rgba(232,160,188,0.13) 0%, transparent 60%),
                 radial-gradient(ellipse at 20% 80%, rgba(245,236,215,0.5) 0%, transparent 50%);
   }
 
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    padding: 1rem 0;
-    background: rgba(232,160,188,0.18); backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(232,160,188,0.3);
-  }
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; padding: 1rem 0; background: rgba(232,160,188,0.18); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(232,160,188,0.3); }
   .nav-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; }
   .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--text); text-decoration: none; }
   .nav-back { font-size: 13px; color: rgba(45,26,36,0.6); text-decoration: none; }
@@ -50,99 +45,93 @@
 
   .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   .cal-cell {
-    aspect-ratio: 1; border-radius: 10px; min-height: 72px;
+    border-radius: 10px; min-height: 80px;
     display: flex; flex-direction: column;
-    align-items: flex-start; justify-content: flex-start;
-    padding: 7px 8px; gap: 3px;
+    align-items: flex-start; padding: 7px 6px; gap: 3px;
     background: #fff; border: 1px solid rgba(45,26,36,0.07);
     transition: box-shadow 0.2s, border-color 0.2s;
   }
   .cal-cell.empty { background: transparent; border: none; pointer-events: none; }
-  .cal-cell.has-stream { cursor: pointer; }
-  .cal-cell.has-stream:hover { box-shadow: 0 4px 14px rgba(232,160,188,0.2); border-color: var(--pink); }
   .cal-cell.today { border: 1.5px solid var(--pink) !important; }
-  .cal-cell.today .cal-date { color: var(--pink); font-weight: 700; }
-  .cal-cell.cancelled { opacity: 0.5; }
-  .cal-cell.cancelled .cal-date { text-decoration: line-through; }
-  .cal-date { font-size: 13px; font-weight: 500; color: rgba(45,26,36,0.78); line-height: 1; }
+  .cal-cell.past { opacity: 0.45; }
+  .cal-date { font-size: 12px; font-weight: 600; color: rgba(45,26,36,0.7); line-height: 1; margin-bottom: 2px; }
   .cal-cell.sun .cal-date { color: #E07070; }
   .cal-cell.sat .cal-date { color: #7090D0; }
-  .cal-cell.today .cal-date { color: var(--pink) !important; }
+  .cal-cell.today .cal-date { color: var(--pink) !important; font-weight: 700; }
 
-  .cal-type-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 2px; }
-  .cal-time-sm { font-size: 9px; color: rgba(45,26,36,0.55); font-weight: 500; }
-
-  /* 카운트 */
-  .stream-count { margin: 1rem 0 1.5rem; font-size: 13px; color: rgba(45,26,36,0.55); }
-
-  /* 리스트 (데스크탑만) */
-  .stream-list { display: flex; flex-direction: column; gap: 8px; }
-  .stream-item {
-    display: flex; align-items: center; gap: 14px; cursor: pointer;
-    background: #fff; border: 1px solid rgba(45,26,36,0.08);
-    border-radius: 12px; padding: 1rem 1.25rem;
-    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  /* 달력 이벤트 태그 — 판다율 스타일 */
+  .cal-event {
+    width: 100%; font-size: 10px; padding: 2px 5px; border-radius: 5px;
+    color: #fff; font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    cursor: pointer; transition: opacity 0.2s;
+    line-height: 1.5;
   }
-  .stream-item:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(232,160,188,0.18); border-color: var(--pink); }
-  .stream-item.cancelled { opacity: 0.5; }
-
-  .stream-date-badge {
-    flex-shrink: 0; min-width: 52px; text-align: center;
-    border-radius: 10px; padding: 6px 10px; line-height: 1.4;
-    font-size: 13px; font-weight: 700;
-    border: 1px solid rgba(232,160,188,0.4);
-    background: rgba(232,160,188,0.12);
-  }
-  .stream-date-badge .dow { font-size: 11px; font-weight: 400; display: block; }
-  .stream-item.cancelled .stream-date-badge { background: rgba(45,26,36,0.04); border-color: rgba(45,26,36,0.1); }
-
-  .stream-type-bar { width: 3px; height: 36px; border-radius: 4px; flex-shrink: 0; }
-  .stream-info { flex: 1; }
-  .stream-title { font-size: 14px; font-weight: 600; }
-  .stream-sub { font-size: 12px; color: rgba(45,26,36,0.5); margin-top: 2px; }
-  .stream-type-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; color: #fff; font-weight: 600; flex-shrink: 0; }
+  .cal-event:hover { opacity: 0.82; }
+  .cal-event.cancelled { opacity: 0.5; text-decoration: line-through; }
 
   /* 모달 */
   .modal-bg { display: none; position: fixed; inset: 0; background: rgba(45,26,36,0.3); z-index: 200; align-items: center; justify-content: center; }
   .modal-bg.open { display: flex; }
-  .modal {
-    background: #fff; border-radius: 20px; padding: 2rem; width: 360px; max-width: 90vw;
-    position: relative;
-  }
+  .modal { background: #fff; border-radius: 20px; padding: 2rem; width: 360px; max-width: 90vw; position: relative; }
   .modal-top { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
   .modal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
   .modal-type { font-size: 11px; color: rgba(45,26,36,0.5); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
   .modal-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .modal-date { font-size: 13px; color: rgba(45,26,36,0.55); margin-bottom: 0.4rem; }
+  .modal-date { font-size: 13px; color: rgba(45,26,36,0.55); margin-bottom: 0.3rem; }
   .modal-time { font-size: 13px; color: rgba(45,26,36,0.55); margin-bottom: 0.8rem; }
   .modal-desc { font-size: 13px; color: rgba(45,26,36,0.7); line-height: 1.7; border-top: 1px solid rgba(45,26,36,0.08); padding-top: 0.8rem; }
   .modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; font-size: 18px; cursor: pointer; color: rgba(45,26,36,0.4); }
   .modal-close:hover { color: var(--text); }
+
+  /* 모바일 주간 탭 */
+  .week-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
+  .week-tab {
+    flex: 1; padding: 9px; border-radius: 10px; font-family: inherit;
+    font-size: 13px; font-weight: 600; cursor: pointer; text-align: center;
+    background: rgba(45,26,36,0.05); border: 1px solid rgba(45,26,36,0.1);
+    color: rgba(45,26,36,0.55); transition: all 0.15s;
+  }
+  .week-tab.active { background: rgba(232,160,188,0.2); border-color: var(--pink); color: var(--text); }
+
+  /* 모바일 리스트 */
+  .mobile-list { display: flex; flex-direction: column; gap: 8px; }
+  .stream-item {
+    display: flex; align-items: center; gap: 12px; cursor: pointer;
+    background: #fff; border: 1px solid rgba(45,26,36,0.08);
+    border-radius: 12px; padding: 0.9rem 1.1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stream-item:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,160,188,0.18); }
+  .stream-item.no-stream { opacity: 0.35; pointer-events: none; }
+  .stream-date-badge { flex-shrink: 0; min-width: 48px; text-align: center; border-radius: 10px; padding: 5px 8px; line-height: 1.4; font-size: 13px; font-weight: 700; border: 1px solid rgba(232,160,188,0.35); background: rgba(232,160,188,0.1); }
+  .stream-date-badge .dow { font-size: 11px; font-weight: 400; display: block; }
+  .stream-date-badge.today-badge { border-color: var(--pink); }
+  .stream-type-bar { width: 3px; height: 34px; border-radius: 4px; flex-shrink: 0; }
+  .stream-info { flex: 1; }
+  .stream-title { font-size: 14px; font-weight: 600; }
+  .stream-sub { font-size: 12px; color: rgba(45,26,36,0.5); margin-top: 2px; }
+  .stream-type-badge { font-size: 11px; padding: 2px 9px; border-radius: 20px; color: #fff; font-weight: 600; flex-shrink: 0; }
 
   /* FOOTER */
   footer { background: var(--beige); border-top: 1px solid rgba(45,26,36,0.08); padding: 1.5rem 0; margin-top: 2rem; }
   .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(45,26,36,0.4); }
   footer a { color: var(--pink); text-decoration: none; }
 
-  /* 모바일 */
+  /* 반응형 */
   @media (max-width: 640px) {
-    .cal-grid-wrap { display: none; }
-    .cal-weekdays { display: none; }
-    .legend { display: none; }
-    .stream-count { display: none; }
-    .stream-list { display: none; }   /* ← 2중 출력 방지 */
-    .mobile-week { display: flex; flex-direction: column; gap: 8px; }
+    .cal-grid-wrap, .cal-weekdays, .legend, .desktop-only { display: none; }
+    .mobile-section { display: block; }
     .container { padding: 1.5rem 5vw 3rem; }
     .nav-inner, .footer-inner { padding: 0 5vw; }
   }
   @media (min-width: 641px) {
-    .mobile-week { display: none; }
+    .mobile-section { display: none; }
     .cal-grid-wrap { display: block; }
   }
 </style>
 </head>
 <body>
-
 <div class="page-bg"></div>
 
 <nav>
@@ -163,21 +152,25 @@
     </div>
   </div>
 
-  <!-- 범례 -->
+  <!-- 데스크탑 범례 -->
   <div class="legend" id="legend"></div>
 
-  <!-- 데스크탑: 달력 -->
+  <!-- 데스크탑 달력 -->
   <div class="cal-weekdays">
     <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span class="sat">토</span>
   </div>
   <div class="cal-grid-wrap">
     <div class="cal-grid" id="cal-grid"></div>
   </div>
-  <p class="stream-count" id="stream-count"></p>
-  <div class="stream-list" id="stream-list"></div>
 
-  <!-- 모바일: 7일치 -->
-  <div class="mobile-week" id="mobile-week"></div>
+  <!-- 모바일 주간 탭 + 리스트 -->
+  <div class="mobile-section">
+    <div class="week-tabs">
+      <button class="week-tab active" id="tab-this" onclick="switchWeek(0)">이번 주</button>
+      <button class="week-tab" id="tab-next" onclick="switchWeek(1)">다음 주</button>
+    </div>
+    <div class="mobile-list" id="mobile-list"></div>
+  </div>
 </div>
 
 <!-- 팝업 모달 -->
@@ -206,31 +199,19 @@
   const SUPABASE_URL  = 'https://xjgzdngivwjemcuzwsiw.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhqZ3pkbmdpdndqZW1jdXp3c2l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzI2NDcsImV4cCI6MjA5NDc0ODY0N30.dm1CYfoh_kVm-XDzbclOzt7qQezrk7ocSbNBMYF_v3M';
 
-  const TYPE_COLORS = {
-    broadcast: '#E8A0BC',
-    game:      '#93C5FD',
-    song:      '#86EFAC',
-    collab:    '#FCA5A5',
-    event:     '#FCD34D',
-    rest:      '#C0B6D6',
-    other:     '#D1D5DB'
-  };
-  const TYPE_LABELS = {
-    broadcast: '방송',
-    game:      '게임',
-    song:      '노래',
-    collab:    '합방',
-    event:     '이벤트',
-    rest:      '휴방',
-    other:     '기타'
-  };
+  const TYPE_COLORS = { broadcast:'#E8A0BC', game:'#93C5FD', song:'#86EFAC', collab:'#FCA5A5', event:'#FCD34D', rest:'#C0B6D6', other:'#D1D5DB' };
+  const TYPE_LABELS = { broadcast:'방송', game:'게임', song:'노래', collab:'합방', event:'이벤트', rest:'휴방', other:'기타' };
+  const DAY_KR = ['일','월','화','수','목','금','토'];
 
-  const DAY_KR  = ['일','월','화','수','목','금','토'];
-  const now     = new Date();
-  let calYear   = now.getFullYear(), calMonth = now.getMonth();
-  let scheduleMap = {}, scheduleList = [], allSchedules = [];
+  const now = new Date();
+  let calYear = now.getFullYear(), calMonth = now.getMonth();
+  let scheduleMap = {}, allSchedules = [];
+  let activeWeek = 0; // 0=이번주, 1=다음주
 
-  // 범례 렌더
+  function getColor(row) { return !row.is_active ? TYPE_COLORS.rest : (row.color || TYPE_COLORS[row.content_type] || TYPE_COLORS.broadcast); }
+  function getLabel(row) { return !row.is_active ? TYPE_LABELS.rest : (TYPE_LABELS[row.content_type] || TYPE_LABELS.broadcast); }
+
+  // 범례
   function renderLegend() {
     document.getElementById('legend').innerHTML = Object.entries(TYPE_LABELS).map(([k,v]) =>
       `<div class="legend-item"><div class="legend-dot" style="background:${TYPE_COLORS[k]}"></div>${v}</div>`
@@ -245,131 +226,97 @@
       { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } }
     );
     const data = await res.json();
-    scheduleMap  = {};
-    scheduleList = data;
-    allSchedules = data;
     data.forEach(row => { scheduleMap[row.scheduled_date] = row; });
+    allSchedules = [...allSchedules.filter(r => !data.find(d => d.id === r.id)), ...data];
   }
 
-  async function fetchExtra(year, month) {
-    const from = `${year}-${String(month+1).padStart(2,'0')}-01`;
-    const to   = `${year}-${String(month+1).padStart(2,'0')}-${new Date(year, month+1, 0).getDate()}`;
-    const res  = await fetch(
-      `${SUPABASE_URL}/rest/v1/stream_schedule?select=*&scheduled_date=gte.${from}&scheduled_date=lte.${to}`,
-      { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } }
-    );
-    const data = await res.json();
-    data.forEach(row => { scheduleMap[row.scheduled_date] = row; });
-  }
-
-  function getColor(row) {
-    if (!row.is_active) return TYPE_COLORS.rest;
-    return row.color || TYPE_COLORS[row.content_type] || TYPE_COLORS.broadcast;
-  }
-  function getLabel(row) {
-    if (!row.is_active) return TYPE_LABELS.rest;
-    return TYPE_LABELS[row.content_type] || row.content_type || TYPE_LABELS.broadcast;
-  }
-
+  // 달력 렌더 — 판다율 스타일 이벤트 태그
   function renderCalendar() {
     const grid     = document.getElementById('cal-grid');
     const label    = document.getElementById('cal-month');
-    const count    = document.getElementById('stream-count');
-    const list     = document.getElementById('stream-list');
     const todayStr = now.toISOString().slice(0, 10);
-
     label.textContent = `${calYear}년 ${calMonth + 1}월`;
 
     const firstDay = new Date(calYear, calMonth, 1).getDay();
     const lastDate = new Date(calYear, calMonth + 1, 0).getDate();
 
-    // 달력
     let html = '';
     for (let i = 0; i < firstDay; i++) html += `<div class="cal-cell empty"></div>`;
+
     for (let d = 1; d <= lastDate; d++) {
       const ds      = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       const row     = scheduleMap[ds];
       const isToday = ds === todayStr;
+      const isPast  = ds < todayStr && !isToday;
       const dow     = new Date(ds).getDay();
       const dowCls  = dow === 0 ? 'sun' : dow === 6 ? 'sat' : '';
+      const pastCls = isPast ? 'past' : '';
 
+      let eventHtml = '';
       if (row) {
         const c    = getColor(row);
-        const time = row.start_time ? row.start_time.slice(0,5) : '';
-        const cls  = `cal-cell has-stream ${row.is_active?'':'cancelled'} ${isToday?'today':''} ${dowCls}`;
-        html += `<div class="${cls}" onclick="showModal('${row.id}')">
-          <span class="cal-date">${d}</span>
-          <div class="cal-type-dot" style="background:${c}"></div>
-          <span class="cal-time-sm">${time}</span>
-        </div>`;
-      } else {
-        html += `<div class="cal-cell ${isToday?'today':''} ${dowCls}"><span class="cal-date">${d}</span></div>`;
+        const time = row.start_time ? row.start_time.slice(0,2).replace(/^0/,'')+'시 ' : '';
+        const ttl  = row.title || '방송';
+        const canCls = !row.is_active ? 'cancelled' : '';
+        eventHtml = `<div class="cal-event ${canCls}" style="background:${c}" onclick="showModal('${row.id}')">${time}${ttl}</div>`;
       }
+
+      html += `<div class="cal-cell ${isToday?'today':''} ${dowCls} ${pastCls}">
+        <div class="cal-date">${d}</div>
+        ${eventHtml}
+      </div>`;
     }
     grid.innerHTML = html;
-
-    // 카운트
-    const cnt = scheduleList.filter(r => r.is_active).length;
-    count.textContent = cnt > 0 ? `이번 달 방송 ${cnt}회 예정` : '';
-
-    // 리스트 (데스크탑)
-    list.innerHTML = scheduleList.length === 0 ? '' : scheduleList.map(row => {
-      const c   = getColor(row);
-      const lbl = getLabel(row);
-      const d   = new Date(row.scheduled_date);
-      const dow = DAY_KR[d.getDay()];
-      const mm  = String(d.getMonth()+1).padStart(2,'0');
-      const dd  = String(d.getDate()).padStart(2,'0');
-      const time = row.start_time ? row.start_time.slice(0,5) : '';
-      const dowColor = d.getDay()===0?'color:#E07070':d.getDay()===6?'color:#7090D0':'';
-      return `<div class="stream-item ${row.is_active?'':'cancelled'}" onclick="showModal('${row.id}')">
-        <div class="stream-date-badge">${mm}/${dd}<span class="dow" style="${dowColor}">${dow}</span></div>
-        <div class="stream-type-bar" style="background:${c}"></div>
-        <div class="stream-info">
-          <div class="stream-title">${row.title || '방송'}</div>
-          <div class="stream-sub">${time}${row.description ? ' · ' + row.description.slice(0,30) : ''}</div>
-        </div>
-        <span class="stream-type-badge" style="background:${c}">${lbl}</span>
-      </div>`;
-    }).join('');
   }
 
+  // 모바일 주간 렌더
   function renderMobileWeek() {
-    const wrap = document.getElementById('mobile-week');
+    const list  = document.getElementById('mobile-list');
+    // 이번주 월요일 기준 주 시작 (일요일 기준으로 해도 됨)
+    const todayDow    = now.getDay(); // 0=일
+    const weekStart   = new Date(now);
+    weekStart.setDate(now.getDate() - todayDow + (activeWeek * 7)); // 이번주 일요일
+    
     const items = [];
     for (let i = 0; i < 7; i++) {
-      const d   = new Date(now); d.setDate(now.getDate() + i);
+      const d   = new Date(weekStart); d.setDate(weekStart.getDate() + i);
       const ds  = d.toISOString().slice(0,10);
       const row = scheduleMap[ds];
       const dow = d.getDay();
-      const dowLabel = DAY_KR[dow];
-      const isToday  = i === 0;
-      const mm = String(d.getMonth()+1).padStart(2,'0');
-      const dd = String(d.getDate()).padStart(2,'0');
+      const isToday = ds === now.toISOString().slice(0,10);
+      const mm  = String(d.getMonth()+1).padStart(2,'0');
+      const dd  = String(d.getDate()).padStart(2,'0');
       const dowColor = dow===0?'color:#E07070':dow===6?'color:#7090D0':'';
 
       if (row) {
-        const c    = getColor(row);
-        const lbl  = getLabel(row);
+        const c   = getColor(row);
+        const lbl = getLabel(row);
         const time = row.start_time ? row.start_time.slice(0,5) : '';
-        items.push(`<div class="stream-item ${row.is_active?'':'cancelled'}" onclick="showModal('${row.id}')">
-          <div class="stream-date-badge" style="${isToday?'border-color:var(--pink);':''}">${mm}/${dd}<span class="dow" style="${dowColor}">${dowLabel}</span></div>
+        items.push(`<div class="stream-item" onclick="showModal('${row.id}')">
+          <div class="stream-date-badge ${isToday?'today-badge':''}">${mm}/${dd}<span class="dow" style="${dowColor}">${DAY_KR[dow]}</span></div>
           <div class="stream-type-bar" style="background:${c}"></div>
           <div class="stream-info">
             <div class="stream-title">${row.title || '방송'}</div>
-            <div class="stream-sub">${time}${row.description ? ' · '+row.description.slice(0,20) : ''}</div>
+            <div class="stream-sub">${time}${row.description?' · '+row.description.slice(0,20):''}</div>
           </div>
           <span class="stream-type-badge" style="background:${c}">${lbl}</span>
         </div>`);
       } else {
-        items.push(`<div class="stream-item" style="opacity:0.35;pointer-events:none;">
-          <div class="stream-date-badge">${mm}/${dd}<span class="dow" style="${dowColor}">${dowLabel}</span></div>
+        items.push(`<div class="stream-item no-stream">
+          <div class="stream-date-badge">${mm}/${dd}<span class="dow" style="${dowColor}">${DAY_KR[dow]}</span></div>
           <div class="stream-type-bar" style="background:rgba(45,26,36,0.1)"></div>
-          <div class="stream-info"><div class="stream-title" style="color:rgba(45,26,36,0.35);">방송 없음</div></div>
+          <div class="stream-info"><div class="stream-title" style="color:rgba(45,26,36,0.3);">방송 없음</div></div>
         </div>`);
       }
     }
-    wrap.innerHTML = items.join('');
+    list.innerHTML = items.join('');
+  }
+
+  function switchWeek(w) {
+    activeWeek = w;
+    document.getElementById('tab-this').classList.toggle('active', w === 0);
+    document.getElementById('tab-next').classList.toggle('active', w === 1);
+    renderMobileWeek();
   }
 
   function showModal(id) {
@@ -379,28 +326,26 @@
     const lbl  = getLabel(row);
     const d    = new Date(row.scheduled_date);
     const time = row.start_time ? row.start_time.slice(0,5) : '';
-    document.getElementById('modal-dot').style.background  = c;
-    document.getElementById('modal-type').textContent      = lbl;
-    document.getElementById('modal-title').textContent     = row.title || '방송';
-    document.getElementById('modal-date').textContent      = `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${DAY_KR[d.getDay()]})`;
-    document.getElementById('modal-time').textContent      = time ? `${time} 방송 시작` : '';
+    document.getElementById('modal-dot').style.background = c;
+    document.getElementById('modal-type').textContent     = lbl;
+    document.getElementById('modal-title').textContent    = row.title || '방송';
+    document.getElementById('modal-date').textContent     = `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${DAY_KR[d.getDay()]})`;
+    document.getElementById('modal-time').textContent     = time ? `${time} 방송 시작` : '';
     const desc = document.getElementById('modal-desc');
     if (row.description) { desc.textContent = row.description; desc.style.display = 'block'; }
     else { desc.style.display = 'none'; }
     document.getElementById('event-modal').classList.add('open');
   }
-
   function closeModal() { document.getElementById('event-modal').classList.remove('open'); }
-  document.getElementById('event-modal').addEventListener('click', e => { if (e.target === document.getElementById('event-modal')) closeModal(); });
+  document.getElementById('event-modal').addEventListener('click', e => { if(e.target===document.getElementById('event-modal')) closeModal(); });
 
   async function loadMonth() {
+    scheduleMap = {}; allSchedules = [];
     await fetchSchedule(calYear, calMonth);
-    // 모바일 7일치 다음달 포함
-    if (calYear === now.getFullYear() && calMonth === now.getMonth()) {
-      const nm = now.getMonth() === 11 ? 0 : now.getMonth() + 1;
-      const ny = now.getMonth() === 11 ? now.getFullYear()+1 : now.getFullYear();
-      await fetchExtra(ny, nm);
-    }
+    // 다음주가 다음달 걸칠 수 있으니 다음달도 fetch
+    const nm = calMonth === 11 ? 0 : calMonth + 1;
+    const ny = calMonth === 11 ? calYear + 1 : calYear;
+    await fetchSchedule(ny, nm);
     renderCalendar();
     renderMobileWeek();
   }
