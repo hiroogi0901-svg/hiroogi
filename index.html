@@ -57,14 +57,15 @@
     position: relative; z-index: 1;
     max-width: 860px; margin: 0 auto;
     display: grid; grid-template-columns: 1.4fr 2fr;
-    min-height: 100vh; padding-top: 48px; padding-bottom: 40px;
-    align-items: center;
+    height: calc(100vh - 48px - 36px);
+    margin-top: 48px;
+    align-items: stretch;
   }
 
   /* LEFT — 이미지 */
   .visual {
     display: flex; align-items: center; justify-content: center;
-    position: relative; padding: 1.5rem 1rem 1.5rem 0;
+    position: relative; padding: 2rem 1rem 2rem 0;
   }
   .visual::after {
     content: '';
@@ -74,7 +75,7 @@
   }
   .photo-frame {
     position: relative; z-index: 2;
-    width: min(220px, 85%);
+    width: min(240px, 88%);
     animation: floatIn 1.2s cubic-bezier(0.16,1,0.3,1) both;
   }
   .photo-frame::before {
@@ -85,7 +86,7 @@
     opacity: 0.25; z-index: -1;
   }
   .photo-frame img, .photo-placeholder {
-    width: 100%; aspect-ratio: 2/3;
+    width: 100%; aspect-ratio: 3/5;
     border-radius: 12px;
     object-fit: cover; object-position: center;
     background: linear-gradient(160deg, #fce7f3, #f5e6d7);
@@ -107,7 +108,7 @@
   /* RIGHT — 정보 */
   .info {
     display: flex; flex-direction: column; justify-content: center;
-    padding: 1.5rem 1rem 1.5rem 1.25rem; gap: 0.9rem;
+    padding: 2rem 2rem 2rem 1.5rem; gap: 0.9rem;
   }
   .eyebrow {
     font-family: 'Noto Sans KR', sans-serif;
