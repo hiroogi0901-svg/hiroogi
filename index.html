@@ -19,80 +19,104 @@
                 radial-gradient(ellipse at 20% 80%, rgba(245,236,215,0.5) 0%, transparent 50%);
   }
 
+  /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 1rem 0;
+    padding: 1.1rem 0;
     background: rgba(232,160,188,0.18); backdrop-filter: blur(16px);
     border-bottom: 1px solid transparent; transition: border-color 0.3s;
   }
   nav.scrolled { border-bottom-color: rgba(232,160,188,0.3); }
-  .nav-inner {
-    max-width: 860px; margin: 0 auto; padding: 0 6vw;
-    display: flex; justify-content: space-between; align-items: center;
-  }
+  .nav-inner { max-width: 960px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; }
   .nav-logo { font-size: 1.1rem; font-weight: 700; color: var(--text); text-decoration: none; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { font-size: 13px; color: rgba(45,26,36,0.6); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
 
-  .profile-section { max-width: 860px; margin: 0 auto; padding: 100px 6vw 4rem; }
+  /* LAYOUT */
+  .profile-section { max-width: 960px; margin: 0 auto; padding: 120px 6vw 5rem; }
 
-  .profile-top { display: flex; align-items: center; gap: 3rem; margin-bottom: 2.5rem; }
-
-  .avatar-circle {
-    flex-shrink: 0; width: 160px; height: 160px; border-radius: 50%;
-    border: 3px solid rgba(232,160,188,0.5); overflow: hidden;
-    background: rgba(232,160,188,0.08);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 24px rgba(232,160,188,0.2);
+  /* 상단: 이미지 + 텍스트 */
+  .profile-top {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3.5rem;
+    align-items: center;
+    margin-bottom: 3rem;
   }
-  .avatar-circle img { width: 100%; height: 100%; object-fit: cover; object-position: center center; display: block; }
-  .avatar-empty { font-size: 44px; opacity: 0.25; }
 
-  .profile-title { flex: 1; }
+  /* 원형 이미지 — 리본 없애고 이미지만 */
+  .avatar-circle {
+    width: 240px; height: 240px; border-radius: 50%;
+    border: 3px solid rgba(232,160,188,0.55);
+    overflow: hidden;
+    box-shadow: 0 6px 32px rgba(232,160,188,0.25);
+    background: rgba(232,160,188,0.06);
+    flex-shrink: 0;
+  }
+  .avatar-circle img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center center;
+    display: block;
+  }
+
+  /* 오른쪽 텍스트 */
   .profile-label { font-size: 11px; letter-spacing: 0.2em; color: rgba(45,26,36,0.45); text-transform: uppercase; margin-bottom: 0.4rem; }
-  .profile-name { font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.1; margin-bottom: 0.6rem; }
-  .profile-bio { font-size: 13px; color: rgba(45,26,36,0.65); line-height: 1.8; margin-bottom: 1.1rem; }
+  .profile-name { font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 0.7rem; }
+  .profile-bio { font-size: 13px; color: rgba(45,26,36,0.65); line-height: 1.9; margin-bottom: 1.1rem; }
 
-  .badge-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 1.1rem; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 1.2rem; }
   .badge { padding: 4px 13px; border-radius: 40px; font-size: 12px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); color: rgba(45,26,36,0.7); }
-  .badge.accent { background: rgba(232,160,188,0.25); border-color: rgba(232,160,188,0.5); font-weight: 500; }
 
   .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 22px; border-radius: 40px; font-family: inherit; font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s; border: none; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 22px; border-radius: 40px; font-family: inherit; font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
   .btn:hover { opacity: 0.82; transform: translateY(-1px); }
   .btn-primary { background: rgba(232,160,188,0.25); border: 1px solid rgba(232,160,188,0.5); color: var(--text); }
   .btn-outline { background: transparent; border: 1px solid rgba(45,26,36,0.18); color: rgba(45,26,36,0.7); }
 
+  /* 카드 그리드 */
   .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
   .info-grid-wide { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
   .info-card {
     background: #fff; border: 1px solid rgba(45,26,36,0.08); border-radius: 14px;
-    padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: 5px;
-    transition: box-shadow 0.2s;
+    padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 6px;
+    transition: box-shadow 0.2s, transform 0.2s;
   }
-  .info-card:hover { box-shadow: 0 4px 16px rgba(232,160,188,0.15); }
+  .info-card:hover {
+    box-shadow: 0 6px 24px rgba(232,160,188,0.22);
+    transform: translateY(-2px);
+  }
   .info-card-label { font-size: 11px; color: rgba(45,26,36,0.45); font-weight: 500; }
   .info-card-val { font-size: 15px; font-weight: 700; }
 
-  .tag-card { background: #fff; border: 1px solid rgba(45,26,36,0.08); border-radius: 14px; padding: 1rem 1.1rem; }
+  .tag-card {
+    background: #fff; border: 1px solid rgba(45,26,36,0.08); border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .tag-card:hover {
+    box-shadow: 0 6px 24px rgba(232,160,188,0.22);
+    transform: translateY(-2px);
+  }
   .tag-card-label { font-size: 11px; color: rgba(45,26,36,0.45); font-weight: 500; margin-bottom: 10px; }
   .tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
   .tag { padding: 4px 11px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); border-radius: 20px; font-size: 12px; color: rgba(45,26,36,0.7); }
 
-  footer { background: var(--beige); border-top: 1px solid rgba(45,26,36,0.08); padding: 1.5rem 0; }
-  .footer-inner { max-width: 860px; margin: 0 auto; padding: 0 6vw; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(45,26,36,0.4); }
-  footer a { color: var(--pink); text-decoration: none; }
+  /* FOOTER */
+  footer { background: var(--beige); border-top: 1px solid rgba(45,26,36,0.08); padding: 1.75rem 0; margin-top: 1rem; }
+  .footer-inner { max-width: 960px; margin: 0 auto; padding: 0 6vw; font-size: 12px; color: rgba(45,26,36,0.4); }
 
+  /* MOBILE */
   @media (max-width: 680px) {
-    .profile-top { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
-    .avatar-circle { width: 110px; height: 110px; }
+    .profile-top { grid-template-columns: 1fr; gap: 1.5rem; }
+    .avatar-circle { width: 130px; height: 130px; }
     .info-grid { grid-template-columns: repeat(2, 1fr); }
     .info-grid-wide { grid-template-columns: 1fr; }
-    nav { padding: 1rem 5vw; }
     .nav-links { display: none; }
-    .profile-section { padding: 80px 5vw 3rem; }
+    .profile-section { padding: 90px 5vw 3rem; }
+    .nav-inner { padding: 0 5vw; }
+    .footer-inner { padding: 0 5vw; }
   }
 </style>
 </head>
@@ -114,14 +138,12 @@
   <div class="profile-top">
     <div class="avatar-circle">
       <img src="assets/profile.jpg" alt="히루기" onerror="this.style.display='none'">
-      <span class="avatar-empty">🎀</span>
     </div>
     <div class="profile-title">
       <p class="profile-label">SOOP VTuber · 개인</p>
       <h1 class="profile-name">히루기♥</h1>
       <p class="profile-bio">게임하고 떠들고 웃는 게 좋은 버튜버.<br>소통과 게임, 가끔 노래까지. 팬 이름은 <strong>루냥이</strong> 🐱</p>
       <div class="badge-row">
-        <span class="badge accent">SOOP 생방송</span>
         <span class="badge">소통</span>
         <span class="badge">게임</span>
         <span class="badge">공포게임</span>
@@ -163,7 +185,6 @@
 <footer>
   <div class="footer-inner">
     <span>© 2026 히루기♥ · 루냥이의 방</span>
-    <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank">SOOP 바로가기 →</a>
   </div>
 </footer>
 

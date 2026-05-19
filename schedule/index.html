@@ -61,7 +61,8 @@
   .cal-cell {
     aspect-ratio: 1; border-radius: 10px;
     display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+    align-items: flex-start; justify-content: flex-start;
+    padding: 8px 10px;
     gap: 3px; min-height: 72px;
   }
   .cal-cell.empty { background: transparent; border: none; }
@@ -89,9 +90,8 @@
   }
   .stream-count::before {
     content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--pink); animation: pulse 2s ease-in-out infinite;
+    background: rgba(232,160,188,0.6);
   }
-  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 
   /* 리스트 */
   .stream-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 8px; }
