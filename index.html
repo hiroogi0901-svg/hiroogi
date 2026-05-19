@@ -186,30 +186,51 @@
   .btn-outline { border: 1px solid rgba(232,160,188,0.35); color: var(--pink); }
   .btn-outline:hover { background: rgba(232,160,188,0.08); transform: translateY(-2px); }
 
-  .schedule-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.85rem 1.4rem;
-    background: rgba(232,160,188,0.1);
-    border: 1px solid rgba(232,160,188,0.45);
-    border-radius: 14px;
+  /* links 2열 직사각형 버튼 */
+  .links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; animation: riseIn 0.8s 0.85s both; }
+  .btn {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.72rem; font-weight: 500;
     text-decoration: none;
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    padding: 0.7rem 1rem;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s, border-color 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-fill {
+    background: linear-gradient(135deg, var(--pink), var(--rose));
+    color: rgba(255,255,255,0.92);
+    box-shadow: 0 3px 12px rgba(232,160,188,0.28);
+    grid-column: span 2;
+  }
+  .btn-fill:hover { box-shadow: 0 6px 18px rgba(232,160,188,0.4); }
+  .btn-outline {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(232,160,188,0.3);
+    color: rgba(45,26,36,0.55);
+  }
+  .btn-outline:hover { background: rgba(232,160,188,0.12); border-color: rgba(232,160,188,0.5); color: rgba(45,26,36,0.8); }
+  .btn-arrow { font-size: 0.8rem; color: rgba(232,160,188,0.7); transition: transform 0.2s; }
+  .btn:hover .btn-arrow { transform: translateX(3px); }
+
+  .schedule-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .schedule-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 1rem;
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(232,160,188,0.3);
+    border-radius: 12px; text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
   }
   .schedule-btn:hover {
-    background: rgba(232,160,188,0.22);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(232,160,188,0.22);
+    background: rgba(232,160,188,0.12); border-color: rgba(232,160,188,0.5);
+    transform: translateY(-2px); box-shadow: 0 5px 14px rgba(232,160,188,0.16);
   }
-  .schedule-btn-label {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 0.82rem; font-weight: 600;
-    color: #c0607e;
-  }
-  .schedule-btn-arrow {
-    font-size: 1rem; color: var(--pink);
-    transition: transform 0.2s;
-  }
-  .schedule-btn:hover .schedule-btn-arrow { transform: translateX(4px); }
+  .schedule-btn-label { font-family: 'Noto Sans KR', sans-serif; font-size: 0.72rem; font-weight: 500; color: rgba(45,26,36,0.55); }
+  .schedule-btn:hover .schedule-btn-label { color: rgba(45,26,36,0.82); }
+  .schedule-btn-arrow { font-size: 0.8rem; color: rgba(232,160,188,0.7); transition: transform 0.2s; }
+  .schedule-btn:hover .schedule-btn-arrow { transform: translateX(3px); }
 
   @keyframes riseIn { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
 
@@ -313,9 +334,17 @@
     </div>
 
     <nav class="links">
-      <a class="btn btn-fill" href="https://www.sooplive.com/station/hiroogi0901" target="_blank">📺 방송 보러가기</a>
-      <a class="btn btn-outline" href="schedule/">방송일정</a>
-      <a class="btn btn-outline" href="https://www.youtube.com/@히루기" target="_blank">▶ 유튜브</a>
+      <a class="btn btn-fill" href="https://www.sooplive.com/station/hiroogi0901" target="_blank">
+        <span>📺 방송 보러가기</span>
+      </a>
+      <a class="btn btn-outline" href="schedule/">
+        <span>방송일정</span>
+        <span class="btn-arrow">→</span>
+      </a>
+      <a class="btn btn-outline" href="https://www.youtube.com/@히루기" target="_blank">
+        <span>▶ 유튜브</span>
+        <span class="btn-arrow">↗</span>
+      </a>
     </nav>
   </div>
 </main>
