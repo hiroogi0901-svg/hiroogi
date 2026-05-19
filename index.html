@@ -186,7 +186,7 @@
   .btn-outline { border: 1px solid rgba(232,160,188,0.35); color: var(--pink); }
   .btn-outline:hover { background: rgba(232,160,188,0.08); transform: translateY(-2px); }
 
-  .schedule-btn {
+  .schedule-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     display: flex; align-items: center; justify-content: space-between;
     padding: 0.85rem 1.4rem;
     background: rgba(232,160,188,0.1);
@@ -301,10 +301,16 @@
       <span class="tag">고양이 좋아</span>
     </div>
 
-    <a href="schedule/" class="schedule-btn" style="animation: riseIn 0.8s 0.8s both;">
-      <span class="schedule-btn-label">방송일정 보기</span>
-      <span class="schedule-btn-arrow">→</span>
-    </a>
+    <div class="schedule-btn-group" style="animation: riseIn 0.8s 0.8s both;">
+      <a href="schedule/" class="schedule-btn">
+        <span class="schedule-btn-label">방송일정 보기</span>
+        <span class="schedule-btn-arrow">→</span>
+      </a>
+      <a href="https://www.youtube.com/@히루기" target="_blank" class="schedule-btn">
+        <span class="schedule-btn-label">유튜브 바로가기</span>
+        <span class="schedule-btn-arrow">↗</span>
+      </a>
+    </div>
 
     <nav class="links">
       <a class="btn btn-fill" href="https://www.sooplive.com/station/hiroogi0901" target="_blank">📺 방송 보러가기</a>
