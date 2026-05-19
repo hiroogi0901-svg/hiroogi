@@ -36,18 +36,16 @@
   /* LAYOUT */
   .profile-section { max-width: 960px; margin: 0 auto; padding: 120px 6vw 5rem; }
 
-  /* 상단: 이미지 + 텍스트 */
   .profile-top {
     display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 3.5rem;
+    grid-template-columns: 280px 1fr;
+    gap: 3rem;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
 
-  /* 원형 이미지 — 리본 없애고 이미지만 */
   .avatar-circle {
-    width: 240px; height: 240px; border-radius: 50%;
+    width: 280px; height: 280px; border-radius: 50%;
     border: 3px solid rgba(232,160,188,0.55);
     overflow: hidden;
     box-shadow: 0 6px 32px rgba(232,160,188,0.25);
@@ -60,16 +58,15 @@
     display: block;
   }
 
-  /* 오른쪽 텍스트 */
-  .profile-label { font-size: 11px; letter-spacing: 0.2em; color: rgba(45,26,36,0.45); text-transform: uppercase; margin-bottom: 0.4rem; }
-  .profile-name { font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 700; line-height: 1.1; margin-bottom: 0.7rem; }
-  .profile-bio { font-size: 13px; color: rgba(45,26,36,0.65); line-height: 1.9; margin-bottom: 1.1rem; }
+  .profile-label { font-size: 11px; letter-spacing: 0.18em; color: rgba(45,26,36,0.4); text-transform: uppercase; margin-bottom: 0.3rem; }
+  .profile-name { font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.05; margin-bottom: 0.5rem; }
+  .profile-bio { font-size: 13px; color: rgba(45,26,36,0.62); line-height: 1.75; margin-bottom: 0.9rem; }
 
-  .badge-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 1.2rem; }
-  .badge { padding: 4px 13px; border-radius: 40px; font-size: 12px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); color: rgba(45,26,36,0.7); }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+  .badge { padding: 3px 12px; border-radius: 40px; font-size: 12px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); color: rgba(45,26,36,0.7); }
 
-  .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 22px; border-radius: 40px; font-family: inherit; font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
+  .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; border-radius: 40px; font-family: inherit; font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
   .btn:hover { opacity: 0.82; transform: translateY(-1px); }
   .btn-primary { background: rgba(232,160,188,0.25); border: 1px solid rgba(232,160,188,0.5); color: var(--text); }
   .btn-outline { background: transparent; border: 1px solid rgba(45,26,36,0.18); color: rgba(45,26,36,0.7); }
@@ -110,7 +107,7 @@
   /* MOBILE */
   @media (max-width: 680px) {
     .profile-top { grid-template-columns: 1fr; gap: 1.5rem; }
-    .avatar-circle { width: 130px; height: 130px; }
+    .avatar-circle { width: 140px; height: 140px; }
     .info-grid { grid-template-columns: repeat(2, 1fr); }
     .info-grid-wide { grid-template-columns: 1fr; }
     .nav-links { display: none; }
