@@ -31,10 +31,14 @@
     min-height: auto;
     padding-top: 80px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     position: relative;
     overflow: hidden;
   }
+  .hero.has-image {
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero-visual { display: none; }
   .hero-bg-shape {
     position: absolute;
     right: -80px; top: -80px;
@@ -52,7 +56,7 @@
     pointer-events: none;
   }
 
-  .hero-visual {
+  .hero.has-image .hero-visual {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -422,17 +426,16 @@
   }
   .nav-links a:hover { color: var(--deep); }
 
-  /* ── MOBILE ── */
   @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-visual { padding: 6rem 2rem 2rem; order: 1; }
+    .hero, .hero.has-image { grid-template-columns: 1fr; }
+    .hero.has-image .hero-visual { padding: 2rem 2rem 0; order: 1; }
     .hero-info { padding: 2rem; order: 2; }
-    .avatar-wrap { width: 220px; }
-    .float-tag { display: none; }
+    .avatar-wrap { width: 200px; margin: 0 auto; }
     .about-grid { grid-template-columns: 1fr; }
-    .section { padding: 3rem 5vw; }
+    .section { padding: 2rem 5vw; }
     nav { padding: 1rem 5vw; }
     .nav-links { display: none; }
+    .hero-profile-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -454,7 +457,9 @@
 
   <div class="hero-visual">
     <div class="avatar-wrap">
-      <img class="avatar-img" src="" alt="히루기" onerror="this.style.display='none'">
+      <img class="avatar-img" src="" alt="히루기"
+        onload="this.closest('.hero').classList.add('has-image')"
+        onerror="this.style.display='none'">
     </div>
   </div>
 
