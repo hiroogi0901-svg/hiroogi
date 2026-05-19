@@ -58,6 +58,7 @@
     display: block;
   }
 
+  .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
   .profile-label { font-size: 11px; letter-spacing: 0.18em; color: rgba(45,26,36,0.4); text-transform: uppercase; margin-bottom: 0.3rem; }
   .profile-name { font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 700; line-height: 1.05; margin-bottom: 0.5rem; }
   .profile-bio { font-size: 13px; color: rgba(45,26,36,0.62); line-height: 1.75; margin-bottom: 0.9rem; }
@@ -65,7 +66,12 @@
   .badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
   .badge { padding: 3px 12px; border-radius: 40px; font-size: 12px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); color: rgba(45,26,36,0.7); }
 
-  .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .hero-card {
+    background: #fff;
+    border: 0.5px solid rgba(232,160,188,0.3);
+    border-radius: 20px;
+    padding: 2rem 2rem 1.75rem;
+  }
   .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; border-radius: 40px; font-family: inherit; font-size: 13px; font-weight: 500; text-decoration: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
   .btn:hover { opacity: 0.82; transform: translateY(-1px); }
   .btn-primary { background: rgba(232,160,188,0.25); border: 1px solid rgba(232,160,188,0.5); color: var(--text); }
@@ -76,27 +82,44 @@
   .info-grid-wide { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
   .info-card {
-    background: #fff; border: 1px solid rgba(45,26,36,0.08); border-radius: 14px;
-    padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 6px;
-    transition: box-shadow 0.2s, transform 0.2s;
+    background: #fff;
+    border: 0.5px solid rgba(232,160,188,0.3);
+    border-radius: 16px;
+    padding: 1.6rem 1rem;
+    text-align: center;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
   }
   .info-card:hover {
-    box-shadow: 0 6px 24px rgba(232,160,188,0.22);
     transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(232,160,188,0.22);
+    border-color: var(--pink);
   }
-  .info-card-label { font-size: 11px; color: rgba(45,26,36,0.45); font-weight: 500; }
-  .info-card-val { font-size: 15px; font-weight: 700; }
+  .info-card-label {
+    font-size: 11px; font-weight: 500;
+    color: rgba(45,26,36,0.42);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .info-card-val { font-size: 1.05rem; font-weight: 700; color: var(--text); }
 
   .tag-card {
-    background: #fff; border: 1px solid rgba(45,26,36,0.08); border-radius: 14px;
-    padding: 1.1rem 1.2rem;
-    transition: box-shadow 0.2s, transform 0.2s;
+    background: #fff;
+    border: 0.5px solid rgba(232,160,188,0.3);
+    border-radius: 16px;
+    padding: 1.3rem 1.2rem;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
   }
   .tag-card:hover {
-    box-shadow: 0 6px 24px rgba(232,160,188,0.22);
     transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(232,160,188,0.22);
+    border-color: var(--pink);
   }
-  .tag-card-label { font-size: 11px; color: rgba(45,26,36,0.45); font-weight: 500; margin-bottom: 10px; }
+  .tag-card-label {
+    font-size: 11px; font-weight: 500;
+    color: rgba(45,26,36,0.42);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
   .tag-cloud { display: flex; flex-wrap: wrap; gap: 7px; }
   .tag { padding: 4px 11px; background: rgba(232,160,188,0.12); border: 1px solid rgba(232,160,188,0.35); border-radius: 20px; font-size: 12px; color: rgba(45,26,36,0.7); }
 
@@ -137,18 +160,20 @@
       <img src="assets/profile.jpg" alt="히루기" onerror="this.style.display='none'">
     </div>
     <div class="profile-title">
-      <p class="profile-label">SOOP VTuber · 개인</p>
-      <h1 class="profile-name">히루기♥</h1>
-      <p class="profile-bio">게임하고 떠들고 웃는 게 좋은 버튜버.<br>소통과 게임, 가끔 노래까지. 팬 이름은 <strong>루냥이</strong> 🐱</p>
-      <div class="badge-row">
-        <span class="badge">소통</span>
-        <span class="badge">게임</span>
-        <span class="badge">공포게임</span>
-        <span class="badge">가끔 노래</span>
-      </div>
-      <div class="btn-group">
-        <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank" class="btn btn-primary">📺 방송 보러가기</a>
-        <a href="https://www.youtube.com/@히루기" target="_blank" class="btn btn-outline">▶ 유튜브</a>
+      <div class="hero-card">
+        <p class="profile-label">SOOP VTuber · 개인</p>
+        <h1 class="profile-name">히루기♥</h1>
+        <p class="profile-bio">게임하고 떠들고 웃는 게 좋은 버튜버.<br>소통과 게임, 가끔 노래까지. 팬 이름은 <strong>루냥이</strong> 🐱</p>
+        <div class="badge-row">
+          <span class="badge">소통</span>
+          <span class="badge">게임</span>
+          <span class="badge">공포게임</span>
+          <span class="badge">가끔 노래</span>
+        </div>
+        <div class="btn-group">
+          <a href="https://www.sooplive.com/station/hiroogi0901" target="_blank" class="btn btn-primary">📺 방송 보러가기</a>
+          <a href="https://www.youtube.com/@히루기" target="_blank" class="btn btn-outline">▶ 유튜브</a>
+        </div>
       </div>
     </div>
   </div>
