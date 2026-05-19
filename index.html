@@ -32,13 +32,15 @@
     padding-top: 80px;
     display: grid;
     grid-template-columns: 1fr;
+    max-width: 680px;
+    margin: 0 auto;
     position: relative;
     overflow: hidden;
   }
   .hero.has-image {
     grid-template-columns: 1fr 1fr;
+    max-width: 900px;
   }
-  .hero-visual { display: none; }
   .hero-bg-shape {
     position: absolute;
     right: -80px; top: -80px;
@@ -56,14 +58,39 @@
     pointer-events: none;
   }
 
+  .hero-visual { display: none; }
   .hero.has-image .hero-visual {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem 3rem;
+    padding: 2rem 2rem;
     position: relative;
     z-index: 1;
   }
+
+  .hero-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.5rem 3rem 2.5rem 3rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .profile-detail {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(232,160,188,0.3);
+  }
+  .profile-detail .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(45,26,36,0.07);
+    font-size: 13px;
+  }
+  .profile-detail .tag-cloud { margin-top: 0; }
   .avatar-wrap {
     position: relative;
     width: 340px;
@@ -79,14 +106,6 @@
     object-position: bottom center;
   }
 
-  .hero-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 2rem 3rem 2rem 2rem;
-    position: relative;
-    z-index: 1;
-  }
 
   .label-sm {
     font-size: 11px;
@@ -475,16 +494,13 @@
       <span class="badge">가끔 노래</span>
     </div>
 
-    <!-- 프로필 정보 인라인 병합 -->
-    <div class="hero-profile-grid">
-      <div class="hero-info-block">
-        <div class="info-row"><span class="info-key">플랫폼</span><span class="info-val">SOOP</span></div>
-        <div class="info-row"><span class="info-key">데뷔</span><span class="info-val">2026. 03. 11</span></div>
-        <div class="info-row"><span class="info-key">생일</span><span class="info-val">8월 23일 🎂</span></div>
-        <div class="info-row"><span class="info-key">팬 이름</span><span class="info-val">루냥이 🐱</span></div>
-      </div>
-      <div class="hero-tag-block">
-        <p class="info-key" style="margin-bottom:8px;">좋아하는 것</p>
+    <div class="profile-detail">
+      <div class="info-row"><span class="info-key">플랫폼</span><span class="info-val">SOOP</span></div>
+      <div class="info-row"><span class="info-key">데뷔</span><span class="info-val">2026. 03. 11</span></div>
+      <div class="info-row"><span class="info-key">생일</span><span class="info-val">8월 23일 🎂</span></div>
+      <div class="info-row"><span class="info-key">팬 이름</span><span class="info-val">루냥이 🐱</span></div>
+      <div class="info-row" style="border-bottom:none; padding-top:12px; align-items:flex-start; flex-direction:column; gap:8px;">
+        <span class="info-key">좋아하는 것</span>
         <div class="tag-cloud">
           <span class="tag">🐱 고양이</span>
           <span class="tag">✨ 예쁜 것</span>
